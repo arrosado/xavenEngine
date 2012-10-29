@@ -65,6 +65,7 @@ bool MotionAnimation::Update(float delta) {
 				switch (this->m_type) {
 					case EaseNone:
 						*(this->m_current_value) = this->m_motion->EaseNone(this->m_elapsed, this->m_start_value, this->m_desired_value - this->m_start_value, this->m_duration);
+						break;
 					case EaseIn:
 						*(this->m_current_value) = this->m_motion->EaseIn(this->m_elapsed, this->m_start_value, this->m_desired_value - this->m_start_value, this->m_duration);
 						break;
