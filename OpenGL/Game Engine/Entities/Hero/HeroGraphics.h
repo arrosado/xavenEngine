@@ -5,7 +5,7 @@
 #include <Entities\IEntity.h>
 #include <Graphics Engine\IGraphicsComponent.h>
 
-#define IMAGES_FOLDER "C:\\USERS\\ar3257\\Documents\\Sandbox\\OpenGL\\OpenGL\\OpenGL\\Debug\\"
+#define IMAGES_FOLDER "..\\OpenGL\\Resources\\"
 
 class HeroGraphics : public IGraphicsComponent {
 public:
