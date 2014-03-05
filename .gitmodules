@@ -1,0 +1,3 @@
+[submodule "Torque2D"]
+	path = Torque2D
+	url = https://github.com/GarageGames/Torque2D.git
