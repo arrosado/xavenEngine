@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CACA87F718CA7BDA004AB524 /* blink.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E218CA7B33004AB524 /* blink.png */; };
+		CACA87F818CA7BDA004AB524 /* climb.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E318CA7B33004AB524 /* climb.png */; };
+		CACA87F918CA7BDA004AB524 /* climbIdle.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E418CA7B33004AB524 /* climbIdle.png */; };
+		CACA87FA18CA7BDA004AB524 /* climbToClimbIdle.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E518CA7B33004AB524 /* climbToClimbIdle.png */; };
+		CACA87FB18CA7BDA004AB524 /* damage.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E618CA7B33004AB524 /* damage.png */; };
+		CACA87FC18CA7BDA004AB524 /* die.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E718CA7B33004AB524 /* die.png */; };
+		CACA87FD18CA7BDA004AB524 /* fall.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E818CA7B33004AB524 /* fall.png */; };
+		CACA87FE18CA7BDA004AB524 /* fly.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E918CA7B33004AB524 /* fly.png */; };
+		CACA87FF18CA7BDA004AB524 /* font1.fnt in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87EA18CA7B33004AB524 /* font1.fnt */; };
+		CACA880018CA7BDA004AB524 /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87EB18CA7B33004AB524 /* font1.png */; };
+		CACA880118CA7BDA004AB524 /* idle.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87EC18CA7B33004AB524 /* idle.png */; };
+		CACA880218CA7BDA004AB524 /* jump.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87ED18CA7B33004AB524 /* jump.png */; };
+		CACA880318CA7BDA004AB524 /* jumpToFall.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87EE18CA7B33004AB524 /* jumpToFall.png */; };
+		CACA880418CA7BDA004AB524 /* land.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87EF18CA7B33004AB524 /* land.png */; };
+		CACA880518CA7BDA004AB524 /* run.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F018CA7B33004AB524 /* run.png */; };
+		CACA880618CA7BDA004AB524 /* running.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F118CA7B33004AB524 /* running.png */; };
+		CACA880718CA7BDA004AB524 /* runToSlide.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F218CA7B33004AB524 /* runToSlide.png */; };
+		CACA880818CA7BDA004AB524 /* slide.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F318CA7B33004AB524 /* slide.png */; };
+		CACA880918CA7BDA004AB524 /* slideDown.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F418CA7B33004AB524 /* slideDown.png */; };
+		CACA880A18CA7BDA004AB524 /* slideToIdle.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F518CA7B33004AB524 /* slideToIdle.png */; };
+		CACA880B18CA7BDA004AB524 /* spawn.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87F618CA7B33004AB524 /* spawn.png */; };
 		D91501E115E06EA100F85B1E /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91501C815E06EA100F85B1E /* tinyxml2.cpp */; };
 		D91501E215E06EA100F85B1E /* TmxLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91501CB15E06EA100F85B1E /* TmxLayer.cpp */; };
 		D91501E315E06EA100F85B1E /* TmxMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91501CD15E06EA100F85B1E /* TmxMap.cpp */; };
@@ -57,7 +78,6 @@
 		D93BEC6115E06E1C0017932B /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = D93BEC4F15E06E1C0017932B /* uncompr.c */; };
 		D93BEC6215E06E1C0017932B /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = D93BEC5215E06E1C0017932B /* zutil.c */; };
 		D97308B415DF26B800AD507C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D97308B315DF26B800AD507C /* main.cpp */; };
-		D97308B615DF26B800AD507C /* OpenGL.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D97308B515DF26B800AD507C /* OpenGL.1 */; };
 		D97308BD15DF270D00AD507C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97308BC15DF270D00AD507C /* OpenGL.framework */; };
 		D97308BF15DF271A00AD507C /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97308BE15DF271A00AD507C /* GLUT.framework */; };
 		D9730B2315DF429C00AD507C /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730A2A15DF429C00AD507C /* Game.cpp */; };
@@ -125,17 +145,58 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		D97308AD15DF26B800AD507C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = Resources;
+			dstSubfolderSpec = 7;
 			files = (
-				D97308B615DF26B800AD507C /* OpenGL.1 in CopyFiles */,
+				CACA87F718CA7BDA004AB524 /* blink.png in CopyFiles */,
+				CACA87F818CA7BDA004AB524 /* climb.png in CopyFiles */,
+				CACA87F918CA7BDA004AB524 /* climbIdle.png in CopyFiles */,
+				CACA87FA18CA7BDA004AB524 /* climbToClimbIdle.png in CopyFiles */,
+				CACA87FB18CA7BDA004AB524 /* damage.png in CopyFiles */,
+				CACA87FC18CA7BDA004AB524 /* die.png in CopyFiles */,
+				CACA87FD18CA7BDA004AB524 /* fall.png in CopyFiles */,
+				CACA87FE18CA7BDA004AB524 /* fly.png in CopyFiles */,
+				CACA87FF18CA7BDA004AB524 /* font1.fnt in CopyFiles */,
+				CACA880018CA7BDA004AB524 /* font1.png in CopyFiles */,
+				CACA880118CA7BDA004AB524 /* idle.png in CopyFiles */,
+				CACA880218CA7BDA004AB524 /* jump.png in CopyFiles */,
+				CACA880318CA7BDA004AB524 /* jumpToFall.png in CopyFiles */,
+				CACA880418CA7BDA004AB524 /* land.png in CopyFiles */,
+				CACA880518CA7BDA004AB524 /* run.png in CopyFiles */,
+				CACA880618CA7BDA004AB524 /* running.png in CopyFiles */,
+				CACA880718CA7BDA004AB524 /* runToSlide.png in CopyFiles */,
+				CACA880818CA7BDA004AB524 /* slide.png in CopyFiles */,
+				CACA880918CA7BDA004AB524 /* slideDown.png in CopyFiles */,
+				CACA880A18CA7BDA004AB524 /* slideToIdle.png in CopyFiles */,
+				CACA880B18CA7BDA004AB524 /* spawn.png in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CACA87E218CA7B33004AB524 /* blink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink.png; sourceTree = "<group>"; };
+		CACA87E318CA7B33004AB524 /* climb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climb.png; sourceTree = "<group>"; };
+		CACA87E418CA7B33004AB524 /* climbIdle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climbIdle.png; sourceTree = "<group>"; };
+		CACA87E518CA7B33004AB524 /* climbToClimbIdle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climbToClimbIdle.png; sourceTree = "<group>"; };
+		CACA87E618CA7B33004AB524 /* damage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = damage.png; sourceTree = "<group>"; };
+		CACA87E718CA7B33004AB524 /* die.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = die.png; sourceTree = "<group>"; };
+		CACA87E818CA7B33004AB524 /* fall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fall.png; sourceTree = "<group>"; };
+		CACA87E918CA7B33004AB524 /* fly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fly.png; sourceTree = "<group>"; };
+		CACA87EA18CA7B33004AB524 /* font1.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = font1.fnt; sourceTree = "<group>"; };
+		CACA87EB18CA7B33004AB524 /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
+		CACA87EC18CA7B33004AB524 /* idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = idle.png; sourceTree = "<group>"; };
+		CACA87ED18CA7B33004AB524 /* jump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jump.png; sourceTree = "<group>"; };
+		CACA87EE18CA7B33004AB524 /* jumpToFall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jumpToFall.png; sourceTree = "<group>"; };
+		CACA87EF18CA7B33004AB524 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
+		CACA87F018CA7B33004AB524 /* run.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run.png; sourceTree = "<group>"; };
+		CACA87F118CA7B33004AB524 /* running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = running.png; sourceTree = "<group>"; };
+		CACA87F218CA7B33004AB524 /* runToSlide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runToSlide.png; sourceTree = "<group>"; };
+		CACA87F318CA7B33004AB524 /* slide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slide.png; sourceTree = "<group>"; };
+		CACA87F418CA7B33004AB524 /* slideDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideDown.png; sourceTree = "<group>"; };
+		CACA87F518CA7B33004AB524 /* slideToIdle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideToIdle.png; sourceTree = "<group>"; };
+		CACA87F618CA7B33004AB524 /* spawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spawn.png; sourceTree = "<group>"; };
 		D91501C815E06EA100F85B1E /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		D91501C915E06EA100F85B1E /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		D91501CA15E06EA100F85B1E /* Tmx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tmx.h; sourceTree = "<group>"; };
@@ -218,7 +279,6 @@
 		D93BEC5315E06E1C0017932B /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
 		D97308AF15DF26B800AD507C /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97308B315DF26B800AD507C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		D97308B515DF26B800AD507C /* OpenGL.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = OpenGL.1; sourceTree = "<group>"; };
 		D97308BC15DF270D00AD507C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D97308BE15DF271A00AD507C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		D9730A2A15DF429C00AD507C /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
@@ -376,6 +436,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CACA87E118CA7B33004AB524 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CACA87E218CA7B33004AB524 /* blink.png */,
+				CACA87E318CA7B33004AB524 /* climb.png */,
+				CACA87E418CA7B33004AB524 /* climbIdle.png */,
+				CACA87E518CA7B33004AB524 /* climbToClimbIdle.png */,
+				CACA87E618CA7B33004AB524 /* damage.png */,
+				CACA87E718CA7B33004AB524 /* die.png */,
+				CACA87E818CA7B33004AB524 /* fall.png */,
+				CACA87E918CA7B33004AB524 /* fly.png */,
+				CACA87EA18CA7B33004AB524 /* font1.fnt */,
+				CACA87EB18CA7B33004AB524 /* font1.png */,
+				CACA87EC18CA7B33004AB524 /* idle.png */,
+				CACA87ED18CA7B33004AB524 /* jump.png */,
+				CACA87EE18CA7B33004AB524 /* jumpToFall.png */,
+				CACA87EF18CA7B33004AB524 /* land.png */,
+				CACA87F018CA7B33004AB524 /* run.png */,
+				CACA87F118CA7B33004AB524 /* running.png */,
+				CACA87F218CA7B33004AB524 /* runToSlide.png */,
+				CACA87F318CA7B33004AB524 /* slide.png */,
+				CACA87F418CA7B33004AB524 /* slideDown.png */,
+				CACA87F518CA7B33004AB524 /* slideToIdle.png */,
+				CACA87F618CA7B33004AB524 /* spawn.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D91501ED15E06EAD00F85B1E /* base64 */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,9 +504,9 @@
 		D97308B215DF26B800AD507C /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				CACA87E118CA7B33004AB524 /* Resources */,
 				D97308C015DF2E0200AD507C /* Game */,
 				D97308B315DF26B800AD507C /* main.cpp */,
-				D97308B515DF26B800AD507C /* OpenGL.1 */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
