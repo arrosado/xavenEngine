@@ -9,17 +9,13 @@
 #include <math.h>
 #ifdef WIN32
 #include <gl/glut.h>
+#define PATH_SEPARATOR "\\"
 #else
 #include <glut.h>
+#define PATH_SEPARATOR "/"
 #endif
 
-class Texture2D;
-
-#ifdef WIN32
-#define RESOURCES_FOLDER "C:\\Sandbox\\OpenGL\\Debug\\"
-#else 
-#define RESOURCES_FOLDER "/Users/betsyserrano/Desktop/Ariel Stuff/Game/openGL/Debug/"
-#endif
+#define RESOURCES_FOLDER ".." PATH_SEPARATOR "OpenGL" PATH_SEPARATOR "Resources" PATH_SEPARATOR
 
 #define MAX_IMAGES_PER_FRAME 1601
 #define MAX_TEXTURES_PER_APP 20
@@ -40,6 +36,8 @@ class Texture2D;
 #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
 /****************** Graphic Types Definitions ****************/
+
+class Texture2D;
 
 typedef enum {
 	kGameScreenOrientation_Portrait           = 0,

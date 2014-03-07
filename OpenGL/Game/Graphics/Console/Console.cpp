@@ -1,7 +1,5 @@
 #include <Game/Graphics/Console/Console.h>
-#include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Physics/PhysicsCommon.h>
-#include <Game/Input/InputManager.h>
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
@@ -66,7 +64,7 @@ void Console::Draw() {
 }
 
 void Console::HandleEvents() {
-	//InputManager * i = InputManager::Instance();
+
 }
 
 void Console::Cleanup() {

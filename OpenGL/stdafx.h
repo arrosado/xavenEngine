@@ -6,4 +6,9 @@
 #pragma once
 
 #include "targetver.h"
+#include <windows.h>
+#include <tchar.h>
+#include <gl/glew.h>
+
+#define _CRT_SECURE_NO_WARNINGS 1
 

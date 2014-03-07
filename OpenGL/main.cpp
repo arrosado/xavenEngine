@@ -12,15 +12,12 @@
 #include <stdlib.h>
 #ifdef WIN32
 #include "stdafx.h"
-#include <windows.h>
-#include <tchar.h>
-#include <gl/glew.h>
 #include <gl/glut.h>
-#include <IGame.h>
 #else
 #include <glut.h>
-#include <Game/IGame.h>
 #endif
+#include <Game/IGame.h>
+
 
 #define WIDTH 600
 #define HEIGHT 600

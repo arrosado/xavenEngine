@@ -13,8 +13,9 @@
 #include <Game/Input/InputManager.h>
 #include <Game/Sound/SoundManager.h>
 #include <Game/Graphics/GraphicsManager.h>
-#include <Game/Scenes/GameSceneManager.h>
 #include <Game/Graphics/Console/Console.h>
+#include <Game/Scenes/GameSceneManager.h>
+
 
 class Game : public IGameEngine {
 private:
@@ -25,7 +26,7 @@ private:
 	SoundManager* GetSound();
 	GraphicsManager* GetGraphics();
 	GameSceneManager* GetScenes();
-	Console* GetConsole();
+	//Console* GetConsole();
 
 public:
     Game();

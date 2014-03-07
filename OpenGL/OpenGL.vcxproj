@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Game;$(FrameworkSdkDir);$(ProjectDir)Game\Physics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Game\Physics;$(ProjectDir)Game\Graphics\zlib;$(ProjectDir)Game\Graphics\libpng;$(ProjectDir)Game\Graphics\Tilemap;$(FrameworkSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +92,7 @@
     <ClInclude Include="Game\Entities\Hero\HeroGraphics.h" />
     <ClInclude Include="Game\Entities\Hero\HeroPhysics.h" />
     <ClInclude Include="Game\Entities\IEntity.h" />
+    <ClInclude Include="Game\Graphics\Console\Console.h" />
     <ClInclude Include="Game\Scenes\GameSceneManager.h" />
     <ClInclude Include="Game\Scenes\InputManager.h" />
     <ClInclude Include="Game\Scenes\States\GameLevel.h" />

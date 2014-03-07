@@ -4,7 +4,7 @@
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Physics/DebugDraw.h>
 #include <Game/Entities/IEntity.h>
-#include <Game/Graphics/Tilemap/Tmx.h>
+//#include <Game/Graphics/Tilemap/Tmx.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -51,7 +51,7 @@ protected:
 	float m_sceneAlpha;
 	bool m_isTransparent;
 
-	Tmx::Map* m_map;
+	//Tmx::Map* m_map;
 	b2World* m_world;
 	static DebugDraw m_debugDraw;
 	std::map<std::string, IEntity*> m_entities;
