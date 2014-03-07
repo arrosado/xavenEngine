@@ -1,5 +1,6 @@
 #include <Game/Graphics/Console/Console.h>
 #include <Game/Physics/PhysicsCommon.h>
+#include <Game/Graphics/GraphicsCommon.h>
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
