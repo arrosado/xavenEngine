@@ -7,11 +7,15 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#ifdef WIN32
+#include <gl/glut.h>
+#else
 #include <glut.h>
+#endif
 
 class Texture2D;
 
-#ifdef __WIN32
+#ifdef WIN32
 #define RESOURCES_FOLDER "C:\\Sandbox\\OpenGL\\Debug\\"
 #else 
 #define RESOURCES_FOLDER "/Users/betsyserrano/Desktop/Ariel Stuff/Game/openGL/Debug/"

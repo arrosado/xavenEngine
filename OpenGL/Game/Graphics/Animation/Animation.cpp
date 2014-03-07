@@ -7,7 +7,7 @@
  *
  */
 
-#include <Animation.h>
+#include <Game/Graphics/Animation/Animation.h>
 
 Animation::~Animation() {
     for (unsigned int i = 0; i < m_frames.size(); i++) {
