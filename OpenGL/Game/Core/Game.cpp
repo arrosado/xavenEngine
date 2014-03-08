@@ -27,16 +27,16 @@ GameSceneManager* Game::GetScenes() {
 	return (GameSceneManager*)this->components[SCENES_KEY]; 
 }
 
-//Console* Game::GetConsole() { 
-//	return (Console*)this->components[CONSOLE_KEY];	
-//}
+Console* Game::GetConsole() {
+	return (Console*)this->components[CONSOLE_KEY];
+}
 
 Game::Game() {
 	this->components[INPUT_KEY] = InputManager::Instance();
 	this->components[SOUND_KEY] = SoundManager::Instance();
     this->components[GRAPHICS_KEY] = GraphicsManager::Instance();
     this->components[SCENES_KEY] = GameSceneManager::Instance();
-//	this->components[CONSOLE_KEY] = Console::Instance();
+	this->components[CONSOLE_KEY] = Console::Instance();
 }
 
 Game::~Game() {
@@ -57,7 +57,7 @@ void Game::Initialize( int width, int height ) {
 	this->components[SOUND_KEY]->Init(0);
 	this->components[GRAPHICS_KEY]->Init(2, width, height);
 	this->components[SCENES_KEY]->Init(0);
-//	this->components[CONSOLE_KEY]->Init(0);
+	this->components[CONSOLE_KEY]->Init(0);
 
 }
 
@@ -110,7 +110,7 @@ void Game::Render() {
 	// Actually Render new graphics to the clean buffer.
 	this->GetScenes()->Draw();
 	// Render the Console.
-//	this->GetConsole()->Draw();
+	this->GetConsole()->Draw();
 	// Play queued sounds.
 	this->GetSound()->PlaySounds();
 	// Render the new buffer to the screen.

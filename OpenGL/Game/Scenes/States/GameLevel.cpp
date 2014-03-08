@@ -14,7 +14,7 @@
 #include <Game/Entities/Hero/Hero.h>
 #include <Game/Entities/Box/Box.h>
 #include <Game/Entities/Circle/Circle.h>
-//#include <Game/Graphics/Console/Console.h>
+#include <Game/Graphics/Console/Console.h>
 #include <Game/Graphics/Grid/Grid.h>
 //#include <Game/Graphics/Tilemap/Tmx.h>
 
@@ -122,10 +122,10 @@ void GameLevel::Update(float delta) {
 }
 
 void GameLevel::Draw() {
-	//Console* c = Console::Instance();
-	//
-	//c->Write("FPS = %.1f", frameRate);
-	//c->Write("Player %s", m_entities[HERO]->IsOnGround ? "Is On Ground" : "Is On Air");
+	Console* c = Console::Instance();
+	
+	c->Write("FPS = %.1f", frameRate);
+	c->Write("Player %s", m_entities[HERO]->IsOnGround ? "Is On Ground" : "Is On Air");
 	
 	Grid* grid = new Grid(10, 10, 10);
 	grid->Draw(GridType::XGrid);

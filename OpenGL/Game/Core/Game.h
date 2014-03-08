@@ -26,7 +26,7 @@ private:
 	SoundManager* GetSound();
 	GraphicsManager* GetGraphics();
 	GameSceneManager* GetScenes();
-	//Console* GetConsole();
+	Console* GetConsole();
 
 public:
     Game();
