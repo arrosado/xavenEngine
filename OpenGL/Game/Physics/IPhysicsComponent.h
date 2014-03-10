@@ -10,7 +10,7 @@
  *
  */
 #include <Game/Physics/PhysicsCommon.h>
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 
 class QueryCallback : public b2QueryCallback
 {

@@ -1,9 +1,9 @@
 #ifndef __HERO_H__
 #define __HERO_H__
 
-#include <Game/Entities/Entity.h>
-#include <Game/Entities/Hero/HeroPhysics.h>
-#include <Game/Entities/Hero/HeroGraphics.h>
+#include <Game/Objects/Entity.h>
+#include <Game/Objects/Player/HeroPhysics.h>
+#include <Game/Objects/Player/HeroGraphics.h>
 
 #define MAX_SPEED 1
 

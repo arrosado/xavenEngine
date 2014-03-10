@@ -11,9 +11,9 @@
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Input/InputManager.h>
 #include <Game/Physics/PhysicsCommon.h>
-#include <Game/Entities/Hero/Hero.h>
-#include <Game/Entities/Box/Box.h>
-#include <Game/Entities/Circle/Circle.h>
+#include <Game/Objects/Player/Hero.h>
+#include <Game/Objects/Box/Box.h>
+#include <Game/Objects/Circle/Circle.h>
 #include <Game/Graphics/Console/Console.h>
 #include <Game/Graphics/Grid/Grid.h>
 //#include <Game/Graphics/Tilemap/Tmx.h>

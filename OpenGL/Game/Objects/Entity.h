@@ -1,7 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 #include <Game/Sound/IAudioComponent.h>
 #include <Game/Physics/IPhysicsComponent.h>
 #include <Game/Graphics/IGraphicsComponent.h>

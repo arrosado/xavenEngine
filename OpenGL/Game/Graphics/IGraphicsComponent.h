@@ -3,7 +3,7 @@
 
 #include <Game/Physics/PhysicsCommon.h> // I shouldn't have to include this one but im using it because of the PTM_RATIO.
 #include <Game/Graphics/Animation/Animation.h>
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 #include <map>
 
 struct IGraphicsComponent { 

@@ -3,7 +3,7 @@
 
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Physics/DebugDraw.h>
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 //#include <Game/Graphics/Tilemap/Tmx.h>
 #include <string>
 #include <vector>

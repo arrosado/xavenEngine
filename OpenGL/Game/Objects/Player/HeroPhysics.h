@@ -1,7 +1,7 @@
 #ifndef __HERO_PHYSICS_H__
 #define __HERO_PHYSICS_H__
 
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 #include <Game/Physics/PhysicsCommon.h>
 #include <Game/Physics/IPhysicsComponent.h>
 

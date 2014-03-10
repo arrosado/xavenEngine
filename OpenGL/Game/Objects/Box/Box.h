@@ -1,8 +1,8 @@
 #ifndef __BOX_H__
 #define __BOX_H__
 
-#include <Game/Entities/Entity.h>
-#include <Game/Entities/Box/BoxPhysics.h>
+#include <Game/Objects/Entity.h>
+#include <Game/Objects/Box/BoxPhysics.h>
 
 class Box: public Entity {
 public:

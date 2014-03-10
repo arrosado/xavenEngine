@@ -1,8 +1,8 @@
 #ifndef __CIRCLE_H__
 #define __CIRCLE_H__
 
-#include <Game/Entities/Entity.h>
-#include <Game/Entities/Circle/CirclePhysics.h>
+#include <Game/Objects/Entity.h>
+#include <Game/Objects/Circle/CirclePhysics.h>
 
 class Circle: public Entity {
 public:

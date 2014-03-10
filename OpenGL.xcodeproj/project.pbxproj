@@ -176,6 +176,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CAA8076118CDDF3A002B1193 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Entity.h; path = Game/Objects/Entity.h; sourceTree = "<group>"; };
+		CAA8076218CDDF3A002B1193 /* IEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IEntity.h; path = Game/Objects/IEntity.h; sourceTree = "<group>"; };
+		CAA8076418CDDF65002B1193 /* Hero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hero.h; path = Game/Objects/Player/Hero.h; sourceTree = "<group>"; };
+		CAA8076518CDDF65002B1193 /* HeroGraphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeroGraphics.h; path = Game/Objects/Player/HeroGraphics.h; sourceTree = "<group>"; };
+		CAA8076618CDDF65002B1193 /* HeroPhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeroPhysics.h; path = Game/Objects/Player/HeroPhysics.h; sourceTree = "<group>"; };
+		CAA8076918CDDF82002B1193 /* Box.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Box.h; path = Game/Objects/Box/Box.h; sourceTree = "<group>"; };
+		CAA8076A18CDDF82002B1193 /* BoxPhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BoxPhysics.h; path = Game/Objects/Box/BoxPhysics.h; sourceTree = "<group>"; };
+		CAA8076B18CDDF8C002B1193 /* Circle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Circle.h; path = Game/Objects/Circle/Circle.h; sourceTree = "<group>"; };
+		CAA8076C18CDDF8C002B1193 /* CirclePhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CirclePhysics.h; path = Game/Objects/Circle/CirclePhysics.h; sourceTree = "<group>"; };
 		CACA87E218CA7B33004AB524 /* blink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink.png; sourceTree = "<group>"; };
 		CACA87E318CA7B33004AB524 /* climb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climb.png; sourceTree = "<group>"; };
 		CACA87E418CA7B33004AB524 /* climbIdle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climbIdle.png; sourceTree = "<group>"; };
@@ -283,15 +292,6 @@
 		D97308BE15DF271A00AD507C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		D9730A2A15DF429C00AD507C /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		D9730A2B15DF429C00AD507C /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		D9730A2E15DF429C00AD507C /* Box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box.h; sourceTree = "<group>"; };
-		D9730A2F15DF429C00AD507C /* BoxPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxPhysics.h; sourceTree = "<group>"; };
-		D9730A3115DF429C00AD507C /* Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
-		D9730A3215DF429C00AD507C /* CirclePhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CirclePhysics.h; sourceTree = "<group>"; };
-		D9730A3315DF429C00AD507C /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
-		D9730A3515DF429C00AD507C /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
-		D9730A3615DF429C00AD507C /* HeroGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroGraphics.h; sourceTree = "<group>"; };
-		D9730A3715DF429C00AD507C /* HeroPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroPhysics.h; sourceTree = "<group>"; };
-		D9730A3815DF429C00AD507C /* IEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEntity.h; sourceTree = "<group>"; };
 		D9730A3B15DF429C00AD507C /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		D9730A3C15DF429C00AD507C /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		D9730A3D15DF429C00AD507C /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
@@ -436,6 +436,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CAA8076018CDDEE2002B1193 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				CAA8076818CDDF76002B1193 /* Circle */,
+				CAA8076718CDDF6E002B1193 /* Box */,
+				CAA8076318CDDF43002B1193 /* Player */,
+				CAA8076118CDDF3A002B1193 /* Entity.h */,
+				CAA8076218CDDF3A002B1193 /* IEntity.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		CAA8076318CDDF43002B1193 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				CAA8076418CDDF65002B1193 /* Hero.h */,
+				CAA8076518CDDF65002B1193 /* HeroGraphics.h */,
+				CAA8076618CDDF65002B1193 /* HeroPhysics.h */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		CAA8076718CDDF6E002B1193 /* Box */ = {
+			isa = PBXGroup;
+			children = (
+				CAA8076918CDDF82002B1193 /* Box.h */,
+				CAA8076A18CDDF82002B1193 /* BoxPhysics.h */,
+			);
+			name = Box;
+			sourceTree = "<group>";
+		};
+		CAA8076818CDDF76002B1193 /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				CAA8076B18CDDF8C002B1193 /* Circle.h */,
+				CAA8076C18CDDF8C002B1193 /* CirclePhysics.h */,
+			);
+			name = Circle;
+			sourceTree = "<group>";
+		};
 		CACA87E118CA7B33004AB524 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,9 +554,9 @@
 		D97308C015DF2E0200AD507C /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				CAA8076018CDDEE2002B1193 /* Objects */,
 				D93BEC0815E03E940017932B /* Input */,
 				D9730A2915DF429C00AD507C /* Core */,
-				D9730A2C15DF429C00AD507C /* Entities */,
 				D9730A3915DF429C00AD507C /* Graphics */,
 				D9730AAA15DF429C00AD507C /* IComponent.h */,
 				D9730AAB15DF429C00AD507C /* IGame.h */,
@@ -535,47 +575,6 @@
 			);
 			name = Core;
 			path = Game/Core;
-			sourceTree = "<group>";
-		};
-		D9730A2C15DF429C00AD507C /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				D9730A2D15DF429C00AD507C /* Box */,
-				D9730A3015DF429C00AD507C /* Circle */,
-				D9730A3315DF429C00AD507C /* Entity.h */,
-				D9730A3415DF429C00AD507C /* Hero */,
-				D9730A3815DF429C00AD507C /* IEntity.h */,
-			);
-			name = Entities;
-			path = Game/Entities;
-			sourceTree = "<group>";
-		};
-		D9730A2D15DF429C00AD507C /* Box */ = {
-			isa = PBXGroup;
-			children = (
-				D9730A2E15DF429C00AD507C /* Box.h */,
-				D9730A2F15DF429C00AD507C /* BoxPhysics.h */,
-			);
-			path = Box;
-			sourceTree = "<group>";
-		};
-		D9730A3015DF429C00AD507C /* Circle */ = {
-			isa = PBXGroup;
-			children = (
-				D9730A3115DF429C00AD507C /* Circle.h */,
-				D9730A3215DF429C00AD507C /* CirclePhysics.h */,
-			);
-			path = Circle;
-			sourceTree = "<group>";
-		};
-		D9730A3415DF429C00AD507C /* Hero */ = {
-			isa = PBXGroup;
-			children = (
-				D9730A3515DF429C00AD507C /* Hero.h */,
-				D9730A3615DF429C00AD507C /* HeroGraphics.h */,
-				D9730A3715DF429C00AD507C /* HeroPhysics.h */,
-			);
-			path = Hero;
 			sourceTree = "<group>";
 		};
 		D9730A3915DF429C00AD507C /* Graphics */ = {

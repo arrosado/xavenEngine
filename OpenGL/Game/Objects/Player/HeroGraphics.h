@@ -4,7 +4,7 @@
 #include <Game/Graphics/IGraphicsComponent.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Graphics/Animation/Animation.h>
-#include <Game/Entities/IEntity.h>
+#include <Game/Objects/IEntity.h>
 
 class HeroGraphics : public IGraphicsComponent {
 public:
