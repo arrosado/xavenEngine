@@ -1,13 +1,13 @@
 #ifndef __HERO_H__
 #define __HERO_H__
 
-#include <Game/Objects/Entity.h>
+#include <Game/Objects/GameObject.h>
 #include <Game/Objects/Player/HeroPhysics.h>
 #include <Game/Objects/Player/HeroGraphics.h>
 
 #define MAX_SPEED 1
 
-class Hero: public Entity {
+class Hero: public GameObject {
 public:
     
     enum Buttons {

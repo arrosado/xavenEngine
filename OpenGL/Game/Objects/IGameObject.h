@@ -40,7 +40,7 @@ enum EntityDirection {
 	EntityDirectionsCount
 };
 
-struct IEntity {
+struct IGameObject {
 public: 
 	std::string name;
 	float width;
@@ -56,7 +56,7 @@ public:
 	virtual void HandleEvents() = 0;
 	virtual void Update(float delta) = 0;
 	virtual void Render() = 0;
-    virtual ~IEntity() {}
+    virtual ~IGameObject() {}
 
 protected:
 	IPhysicsComponent  *m_physics;

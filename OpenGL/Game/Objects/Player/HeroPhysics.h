@@ -1,14 +1,14 @@
 #ifndef __HERO_PHYSICS_H__
 #define __HERO_PHYSICS_H__
 
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 #include <Game/Physics/PhysicsCommon.h>
 #include <Game/Physics/IPhysicsComponent.h>
 
 class HeroPhysics: public IPhysicsComponent { 
 public:
 
-	HeroPhysics(float x, float y, float w, float h, b2World* world, IEntity* entity) { 
+	HeroPhysics(float x, float y, float w, float h, b2World* world, IGameObject* entity) {
 		this->m_entity = entity;
 		this->m_world = world;
 

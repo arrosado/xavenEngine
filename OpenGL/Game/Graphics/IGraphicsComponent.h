@@ -3,12 +3,12 @@
 
 #include <Game/Physics/PhysicsCommon.h> // I shouldn't have to include this one but im using it because of the PTM_RATIO.
 #include <Game/Graphics/Animation/Animation.h>
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 #include <map>
 
 struct IGraphicsComponent { 
 protected:
-	IEntity *m_entity;
+    IGameObject* m_entity;
 	std::map<EntityState, Animation*> m_animations;
 	Animation* m_currentAnimation;
 public:

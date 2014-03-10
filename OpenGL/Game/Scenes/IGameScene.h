@@ -3,7 +3,7 @@
 
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Physics/DebugDraw.h>
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 //#include <Game/Graphics/Tilemap/Tmx.h>
 #include <string>
 #include <vector>
@@ -54,7 +54,7 @@ protected:
 	//Tmx::Map* m_map;
 	b2World* m_world;
 	static DebugDraw m_debugDraw;
-	std::map<std::string, IEntity*> m_entities;
+	std::map<std::string, IGameObject*> m_objects;
 
 };
 

@@ -10,7 +10,7 @@
  *
  */
 #include <Game/Physics/PhysicsCommon.h>
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 
 class QueryCallback : public b2QueryCallback
 {
@@ -51,7 +51,7 @@ protected:
 	b2World *m_world;
 	b2Body *m_body;
 	b2Fixture *m_fixture;
-	IEntity *m_entity;
+	IGameObject *m_entity;
 
 public:
 
@@ -81,7 +81,7 @@ public:
 		float a = this->m_body->GetAngle();
 		b2Vec2 p = this->m_body->GetPosition();
 		b2Vec2 v = this->m_body->GetLinearVelocity();
-		IEntity* e = ((IEntity*)this->m_body->GetUserData());
+		IGameObject* e = ((IGameObject*)this->m_body->GetUserData());
 		
 		e->position = Vector2DfMake(p.x, p.y);//Vector2DfMake(GetUnRealWH(p.x), GetUnRealWH(p.y));
 		e->velocity = Vector2DfMake(v.x, v.y);

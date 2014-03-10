@@ -4,11 +4,11 @@
 #include <Game/Graphics/IGraphicsComponent.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Graphics/Animation/Animation.h>
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 
 class HeroGraphics : public IGraphicsComponent {
 public:
-	HeroGraphics(IEntity * entity) { 
+	HeroGraphics(IGameObject * entity) {
 		
 		IGraphicsComponent::IGraphicsComponent();
 
@@ -46,7 +46,7 @@ public:
 
 		IGraphicsComponent::Update(delta);
 
-		IEntity* e = this->m_entity;
+		IGameObject* e = this->m_entity;
 
 		if (this->m_currentAnimation && this->m_currentAnimation == this->m_animations[EntityState::SPAWNING])
 			e->IsReady = (m_currentAnimation->GetAnimationState() == AnimationState::AS_STOPPED) ? true : false;

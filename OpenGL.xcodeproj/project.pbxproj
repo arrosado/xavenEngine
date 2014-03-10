@@ -176,8 +176,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CAA8076118CDDF3A002B1193 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Entity.h; path = Game/Objects/Entity.h; sourceTree = "<group>"; };
-		CAA8076218CDDF3A002B1193 /* IEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IEntity.h; path = Game/Objects/IEntity.h; sourceTree = "<group>"; };
+		CAA8076118CDDF3A002B1193 /* GameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameObject.h; path = Game/Objects/GameObject.h; sourceTree = "<group>"; };
+		CAA8076218CDDF3A002B1193 /* IGameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IGameObject.h; path = Game/Objects/IGameObject.h; sourceTree = "<group>"; };
 		CAA8076418CDDF65002B1193 /* Hero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hero.h; path = Game/Objects/Player/Hero.h; sourceTree = "<group>"; };
 		CAA8076518CDDF65002B1193 /* HeroGraphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeroGraphics.h; path = Game/Objects/Player/HeroGraphics.h; sourceTree = "<group>"; };
 		CAA8076618CDDF65002B1193 /* HeroPhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeroPhysics.h; path = Game/Objects/Player/HeroPhysics.h; sourceTree = "<group>"; };
@@ -442,8 +442,8 @@
 				CAA8076818CDDF76002B1193 /* Circle */,
 				CAA8076718CDDF6E002B1193 /* Box */,
 				CAA8076318CDDF43002B1193 /* Player */,
-				CAA8076118CDDF3A002B1193 /* Entity.h */,
-				CAA8076218CDDF3A002B1193 /* IEntity.h */,
+				CAA8076118CDDF3A002B1193 /* GameObject.h */,
+				CAA8076218CDDF3A002B1193 /* IGameObject.h */,
 			);
 			name = Objects;
 			sourceTree = "<group>";

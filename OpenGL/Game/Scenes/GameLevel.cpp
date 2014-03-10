@@ -39,10 +39,10 @@ void GameLevel::Init() {
 	m_debugDraw.SetFlags(flags);
 	
 	m_world->SetDebugDraw(&m_debugDraw);
-	this->m_entities[HERO] = new Hero(200, 300 , 20, 20, m_world);
-	this->m_entities["Floor1"] = new Box(0, -50, 4600, 50, true, m_world);
-	this->m_entities["Floor2"] = new Box(-200, 0, 200, 50, true, m_world);
-	this->m_entities["Circle"] = new Circle(-50, 220, 50, false, m_world);
+	this->m_objects[HERO] = new Hero(200, 300 , 20, 20, m_world);
+	this->m_objects["Floor1"] = new Box(0, -50, 4600, 50, true, m_world);
+	this->m_objects["Floor2"] = new Box(-200, 0, 200, 50, true, m_world);
+	this->m_objects["Circle"] = new Circle(-50, 220, 50, false, m_world);
 
 	b2Vec2 stackPoint(10.0f, 20.0f);
 
@@ -64,16 +64,16 @@ void GameLevel::Init() {
 			p.x = ((w * 2 + s) * i) + stackPoint.x;
 			p.y = ((h * 2 + s) * k) + stackPoint.y;
 
-			this->m_entities[name] = new Box(p.x, p.y, w, h, false, m_world);
+			this->m_objects[name] = new Box(p.x, p.y, w, h, false, m_world);
 		}
 }
 
 void GameLevel::Cleanup() {
-	map<string, IEntity*>::iterator it;
-	for(it = this->m_entities.begin(); it != this->m_entities.end(); it++)
+	map<string, IGameObject*>::iterator it;
+	for(it = this->m_objects.begin(); it != this->m_objects.end(); it++)
 		delete it->second;
 
-	this->m_entities.clear();
+	this->m_objects.clear();
 
 	delete this->m_world;
 }
@@ -84,8 +84,8 @@ void GameLevel::Resume() {}
 
 void GameLevel::HandleEvents() {
 	/* This gives the oportunity to all entities to read input and change state accordingly. */
-	map<string, IEntity*>::iterator it;
-	for(it = this->m_entities.begin(); it != this->m_entities.end(); it++)
+	map<string, IGameObject*>::iterator it;
+	for(it = this->m_objects.begin(); it != this->m_objects.end(); it++)
 		it->second->HandleEvents();
 }
 	
@@ -105,11 +105,11 @@ void GameLevel::Update(float delta) {
 	}
 
 	/* This syncronizes the Physics with the Audio and Graphics. */
-	map<string, IEntity*>::iterator it;
-	for(it = this->m_entities.begin(); it != this->m_entities.end(); it++)
+	map<string, IGameObject*>::iterator it;
+	for(it = this->m_objects.begin(); it != this->m_objects.end(); it++)
 		it->second->Update(delta);
 
-	if (this->m_entities[HERO]->IsReady == false)
+	if (this->m_objects[HERO]->IsReady == false)
 		return;
 
 	/* This code runs the Box2D World. */
@@ -125,7 +125,7 @@ void GameLevel::Draw() {
 	Console* c = Console::Instance();
 	
 	c->Write("FPS = %.1f", frameRate);
-	c->Write("Player %s", m_entities[HERO]->IsOnGround ? "Is On Ground" : "Is On Air");
+	c->Write("Player %s", m_objects[HERO]->IsOnGround ? "Is On Ground" : "Is On Air");
 	
 	Grid* grid = new Grid(10, 10, 10);
 	grid->Draw(GridType::XGrid);
@@ -135,8 +135,8 @@ void GameLevel::Draw() {
 	//	m_map->Render();
 
 	/* This syncronizes the Physics with the Audio and Graphics. */
-	map<string, IEntity*>::iterator it;
-	for(it = this->m_entities.begin(); it != this->m_entities.end(); it++)
+	map<string, IGameObject*>::iterator it;
+	for(it = this->m_objects.begin(); it != this->m_objects.end(); it++)
 		it->second->Render();
 	
 	this->m_world->DrawDebugData();

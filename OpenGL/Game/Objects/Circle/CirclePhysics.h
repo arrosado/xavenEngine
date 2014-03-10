@@ -6,7 +6,7 @@
 
 class CirclePhysics: public IPhysicsComponent { 
 public: 
-	CirclePhysics(float x, float y, float w, bool isStatic, b2World* world, IEntity* entity) { 
+	CirclePhysics(float x, float y, float w, bool isStatic, b2World* world, IGameObject* entity) {
 		this->m_entity = entity;
 		this->m_world = world;
 

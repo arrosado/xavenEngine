@@ -6,7 +6,7 @@
 
 class BoxPhysics: public IPhysicsComponent {
 public:
-	BoxPhysics(float x, float y, float w, float h, bool isStatic, b2World* world, IEntity* entity) {
+	BoxPhysics(float x, float y, float w, float h, bool isStatic, b2World* world, IGameObject* entity) {
 		this->m_entity = entity;
 		this->m_world = world;
 

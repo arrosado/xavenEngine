@@ -1,20 +1,20 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include <Game/Objects/IEntity.h>
+#include <Game/Objects/IGameObject.h>
 #include <Game/Sound/IAudioComponent.h>
 #include <Game/Physics/IPhysicsComponent.h>
 #include <Game/Graphics/IGraphicsComponent.h>
 
-class Entity : public IEntity {
+class GameObject : public IGameObject {
 public:
-	Entity() {
+	GameObject() {
 		this->m_physics = NULL;
 		this->m_graphics = NULL;
 		this->m_audio = NULL;
 	}
 
-	~Entity() {
+	~GameObject() {
 		if (m_physics)
 			delete m_physics;
 		if (m_graphics)
