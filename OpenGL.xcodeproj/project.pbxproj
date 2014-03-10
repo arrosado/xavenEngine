@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CAA8077018CDE135002B1193 /* GameLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAA8076D18CDE135002B1193 /* GameLevel.cpp */; };
 		CACA87F718CA7BDA004AB524 /* blink.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E218CA7B33004AB524 /* blink.png */; };
 		CACA87F818CA7BDA004AB524 /* climb.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E318CA7B33004AB524 /* climb.png */; };
 		CACA87F918CA7BDA004AB524 /* climbIdle.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CACA87E418CA7B33004AB524 /* climbIdle.png */; };
@@ -138,7 +139,6 @@
 		D9730B8A15DF429C00AD507C /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730B0F15DF429C00AD507C /* b2Rope.cpp */; };
 		D9730B8B15DF429C00AD507C /* DebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730B1115DF429C00AD507C /* DebugDraw.cpp */; };
 		D9730B8C15DF429C00AD507C /* GameSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730B1615DF429C00AD507C /* GameSceneManager.cpp */; };
-		D9730B8E15DF429C00AD507C /* GameLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730B1B15DF429C00AD507C /* GameLevel.cpp */; };
 		D9730B8F15DF429C00AD507C /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9730B2115DF429C00AD507C /* SoundManager.cpp */; };
 /* End PBXBuildFile section */
 
@@ -185,6 +185,9 @@
 		CAA8076A18CDDF82002B1193 /* BoxPhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BoxPhysics.h; path = Game/Objects/Box/BoxPhysics.h; sourceTree = "<group>"; };
 		CAA8076B18CDDF8C002B1193 /* Circle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Circle.h; path = Game/Objects/Circle/Circle.h; sourceTree = "<group>"; };
 		CAA8076C18CDDF8C002B1193 /* CirclePhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CirclePhysics.h; path = Game/Objects/Circle/CirclePhysics.h; sourceTree = "<group>"; };
+		CAA8076D18CDE135002B1193 /* GameLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLevel.cpp; sourceTree = "<group>"; };
+		CAA8076E18CDE135002B1193 /* GameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLevel.h; sourceTree = "<group>"; };
+		CAA8076F18CDE135002B1193 /* IGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGameScene.h; sourceTree = "<group>"; };
 		CACA87E218CA7B33004AB524 /* blink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink.png; sourceTree = "<group>"; };
 		CACA87E318CA7B33004AB524 /* climb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climb.png; sourceTree = "<group>"; };
 		CACA87E418CA7B33004AB524 /* climbIdle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climbIdle.png; sourceTree = "<group>"; };
@@ -414,9 +417,6 @@
 		D9730B1415DF429C00AD507C /* PhysicsCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsCommon.h; sourceTree = "<group>"; };
 		D9730B1615DF429C00AD507C /* GameSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneManager.cpp; sourceTree = "<group>"; };
 		D9730B1715DF429C00AD507C /* GameSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSceneManager.h; sourceTree = "<group>"; };
-		D9730B1B15DF429C00AD507C /* GameLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLevel.cpp; sourceTree = "<group>"; };
-		D9730B1C15DF429C00AD507C /* GameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLevel.h; sourceTree = "<group>"; };
-		D9730B1D15DF429C00AD507C /* IGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGameScene.h; sourceTree = "<group>"; };
 		D9730B1F15DF429C00AD507C /* IAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAudioComponent.h; sourceTree = "<group>"; };
 		D9730B2015DF429C00AD507C /* SoundCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCommon.h; sourceTree = "<group>"; };
 		D9730B2115DF429C00AD507C /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
@@ -943,22 +943,14 @@
 		D9730B1515DF429C00AD507C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				CAA8076D18CDE135002B1193 /* GameLevel.cpp */,
+				CAA8076E18CDE135002B1193 /* GameLevel.h */,
+				CAA8076F18CDE135002B1193 /* IGameScene.h */,
 				D9730B1615DF429C00AD507C /* GameSceneManager.cpp */,
 				D9730B1715DF429C00AD507C /* GameSceneManager.h */,
-				D9730B1A15DF429C00AD507C /* States */,
 			);
 			name = Scenes;
 			path = Game/Scenes;
-			sourceTree = "<group>";
-		};
-		D9730B1A15DF429C00AD507C /* States */ = {
-			isa = PBXGroup;
-			children = (
-				D9730B1B15DF429C00AD507C /* GameLevel.cpp */,
-				D9730B1C15DF429C00AD507C /* GameLevel.h */,
-				D9730B1D15DF429C00AD507C /* IGameScene.h */,
-			);
-			path = States;
 			sourceTree = "<group>";
 		};
 		D9730B1E15DF429C00AD507C /* Sound */ = {
@@ -1054,6 +1046,7 @@
 				D9730B6D15DF429C00AD507C /* b2Settings.cpp in Sources */,
 				D9730B6E15DF429C00AD507C /* b2StackAllocator.cpp in Sources */,
 				D9730B6F15DF429C00AD507C /* b2Timer.cpp in Sources */,
+				CAA8077018CDE135002B1193 /* GameLevel.cpp in Sources */,
 				D9730B7015DF429C00AD507C /* b2ChainAndCircleContact.cpp in Sources */,
 				D9730B7115DF429C00AD507C /* b2ChainAndPolygonContact.cpp in Sources */,
 				D9730B7215DF429C00AD507C /* b2CircleContact.cpp in Sources */,
@@ -1083,7 +1076,6 @@
 				D9730B8A15DF429C00AD507C /* b2Rope.cpp in Sources */,
 				D9730B8B15DF429C00AD507C /* DebugDraw.cpp in Sources */,
 				D9730B8C15DF429C00AD507C /* GameSceneManager.cpp in Sources */,
-				D9730B8E15DF429C00AD507C /* GameLevel.cpp in Sources */,
 				D9730B8F15DF429C00AD507C /* SoundManager.cpp in Sources */,
 				D93BEC0C15E03ED50017932B /* InputManager.cpp in Sources */,
 				D93BEC0F15E03F730017932B /* ParticleEmitter.cpp in Sources */,

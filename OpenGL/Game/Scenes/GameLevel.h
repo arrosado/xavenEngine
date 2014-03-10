@@ -11,7 +11,7 @@
 #define __GAME_LEVEL_H__
 
 #include <stdio.h>
-#include <Game/Scenes/States/IGameScene.h>
+#include <Game/Scenes/IGameScene.h>
 
 class GameLevel : public IGameScene {
 public:

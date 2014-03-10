@@ -9,8 +9,8 @@
 
 #include <Game/Scenes/GameSceneManager.h>
 #include <Game/Input/InputManager.h>
-#include <Game/Scenes/States/IGameScene.h>
-#include <Game/Scenes/States/GameLevel.h>
+#include <Game/Scenes/IGameScene.h>
+#include <Game/Scenes/GameLevel.h>
 
 GameSceneManager GameSceneManager::m_SceneManagerInstance;
 

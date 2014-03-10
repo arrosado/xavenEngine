@@ -7,7 +7,7 @@
  *
  */
 
-#include <Game/Scenes/States/GameLevel.h>
+#include <Game/Scenes/GameLevel.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Input/InputManager.h>
 #include <Game/Physics/PhysicsCommon.h>

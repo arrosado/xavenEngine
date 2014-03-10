@@ -10,7 +10,7 @@
 #define __GAME_SCENE_MANAGER_H__
 
 #include <Game/IComponent.h>
-#include <Game/Scenes/States/IGameScene.h>
+#include <Game/Scenes/IGameScene.h>
 #include <vector>
 
 class GameSceneManager : public IComponent {
