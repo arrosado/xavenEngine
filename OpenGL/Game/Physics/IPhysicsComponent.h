@@ -84,7 +84,9 @@ public:
 		b2Vec2 p = this->m_body->GetPosition();
 		IGameObject* e = ((IGameObject*)this->m_body->GetUserData());
 		
-		e->position = Vector3DfMake(p.x, p.y, 0.0f);
+        
+        
+		e->position = Vector3DfMake(p.x, p.y, 10.0f);
 		e->rotation = Vector3DfMake(0.0f, 0.0f, a * (180.0f/b2_pi));
 	}
 };

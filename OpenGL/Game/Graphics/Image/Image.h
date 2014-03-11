@@ -31,7 +31,7 @@ private:
 	
 	Size2Df maxTextureSize;
 	Vector2Df textureOffset;
-	float rotation;
+	Vector3Df rotation;
 	Size2Df scale;
 	bool flipHorizontally;
 	bool flipVertically;
@@ -41,8 +41,8 @@ public:
 	// This is beign used by the ParticleEmitter.
 	GLuint textureName;
 private:
-	Vector2Df point;
-	Vector2Df rotationPoint;
+	Vector3Df point;
+	Vector3Df rotationPoint;
 	Color4f color;
 	bool dirty;
 	GLenum minMagFilter;
@@ -58,7 +58,7 @@ public:
 	Image(const string& name, GLenum filter, Rect2Df subTexture);
 	~Image();
 	
-	inline GLuint GetRotation() { return this->rotation; } 
+	//inline GLuint GetRotation() { return this->rotation; }
 	inline GLuint GetWidth() { return this->imageSize.width; } 
 	inline GLuint GetHeight() { return this->imageSize.height; }
 	inline Texture2D* GetTexture() { return this->texture; } 
@@ -91,7 +91,7 @@ public:
 		this->dirty = true;	
 	}
 
-	inline void SetRotation(float rotation) {
+	inline void SetRotation(Vector3Df rotation) {
 		this->rotation = rotation;
 		this->dirty = true;
 	}
@@ -103,11 +103,11 @@ public:
 	void InitializeImageDetails();
 	
 	void Render();
-	void Render(Vector2Df point);
-	void Render(Vector2Df point, Size2Df scale, float rotation);
+	void Render(Vector3Df point);
+	void Render(Vector3Df point, Size2Df scale, Vector3Df rotation);
 	void Render(bool centered);
-	void Render(Vector2Df point, bool centered);
-	void Render(Vector2Df point, Size2Df scale, float rotation, bool centered);
+	void Render(Vector3Df point, bool centered);
+	void Render(Vector3Df point, Size2Df scale, Vector3Df rotation, bool centered);
 	
 };
 

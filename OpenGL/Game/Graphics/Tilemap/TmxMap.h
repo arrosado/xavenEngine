@@ -150,9 +150,9 @@ namespace Tmx
 		// Get the property set.
 		const Tmx::PropertySet &GetProperties() { return properties; }
 
-        void SetPosition(Vector2Df position) { this->position = Vector2DfMake(position.x, position.y); }
+        void SetPosition(Vector3Df position) { this->position = Vector3DfMake(position.x, position.y, position.z); }
         
-        Vector2Df GetPosition() { return this->position; }
+        Vector3Df GetPosition() { return this->position; }
         
         void SetSize(Size2Df size) { this->size = Size2DfMake(size.width, size.height); }
         
@@ -171,7 +171,7 @@ namespace Tmx
 		int height;
 		int tile_width;
 		int tile_height;
-        Vector2Df position;
+        Vector3Df position;
         Size2Df size;
 
 		std::vector< Tmx::Layer* > layers;

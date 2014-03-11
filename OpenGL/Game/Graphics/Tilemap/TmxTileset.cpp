@@ -79,7 +79,7 @@ namespace Tmx
 
 	}
 
-	const void Tileset::RenderTile(int id, float x, float y, Vector2Df position) {
+	const void Tileset::RenderTile(int id, float x, float y, Vector3Df position) {
 		int xs, ys;
 
 		xs = id % tiles->GetColumns();
@@ -90,6 +90,6 @@ namespace Tmx
 
 		Image* img = NULL;
 		img = tiles->GetSprite(xs, ys);
-		if(img) img->Render(Vector2DfMake(x + position.x, y + position.y - (tile_height/2)), Size2DfZero, 0.0f, false);
+		if(img) img->Render(Vector3DfMake(x + position.x, y + position.y - (tile_height/2), position.z), Size2DfZero, Vector3DfZero, false);
 	}
 };

@@ -59,8 +59,8 @@ public:
 	
 	void Reset(AnimationType type);
 	void Update( float delta );
-	void Render(Vector2Df point);
-	void Render(Vector2Df point, float scale, float rotation);
+	void Render(Vector3Df point);
+	void Render(Vector3Df point, Size2Df scale, Vector3Df rotation);
 	AnimationDirection GetAnimationDirection();
 	void SetAnimationDirection(AnimationDirection newAnimationDirection);
 	AnimationType GetAnimationType();

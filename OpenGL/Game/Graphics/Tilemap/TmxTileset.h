@@ -79,7 +79,7 @@ namespace Tmx
 		// Returns the whole tile collection.
 		SpriteSheet* GetTiles() const { return tiles; } 
 
-		const void RenderTile(int id, float x, float y, Vector2Df position);
+		const void RenderTile(int id, float x, float y, Vector3Df position);
 
 	private:
 		int first_gid;

@@ -193,10 +193,11 @@ static inline void loadIdentityMatrix(float aMatrix[]) {
 
 // Applies a rotation transformation to the supplied matrix.  A translation is also applied
 // which allows the rotation to take place around a specific point.
-static inline void rotateMatrix(float aMatrix[], Vector2Df aRotationPoint, float aRotation) {
+static inline void rotateMatrix(float aMatrix[], Vector3Df aRotationPoint, float aRotation) {
     // Translate into the image to the point around which rotation will occur
     aMatrix[6] = aRotationPoint.x * aMatrix[0] + aRotationPoint.y * aMatrix[3] + aMatrix[6];
     aMatrix[7] = aRotationPoint.x * aMatrix[1] + aRotationPoint.y * aMatrix[4] + aMatrix[7];
+    aMatrix[8] = aRotationPoint.x * aMatrix[2] + aRotationPoint.y * aMatrix[5] + aMatrix[8];
     
     // Turns the degrees passed in to radians for the calculations
     float radians = DEGREES_TO_RADIANS(aRotation);
@@ -224,6 +225,7 @@ static inline void rotateMatrix(float aMatrix[], Vector2Df aRotationPoint, float
     // Now reverse the translation we did to the point of rotation
     aMatrix[6] = -aRotationPoint.x * aMatrix[0] + -aRotationPoint.y * aMatrix[3] + aMatrix[6];
     aMatrix[7] = -aRotationPoint.x * aMatrix[1] + -aRotationPoint.y * aMatrix[4] + aMatrix[7];
+    aMatrix[8] = -aRotationPoint.x * aMatrix[2] + -aRotationPoint.y * aMatrix[5] + aMatrix[8];
 }
 
 // Applies the scale transformation to the matrix using the scale information provided in |aScale|
@@ -238,9 +240,10 @@ static inline void scaleMatrix(float aMatrix[], Size2Df aScale) {
 }
 
 // Applies the translation transformation to the matrix using |aPoint|
-static inline void translateMatrix(float aMatrix[], Vector2Df aPoint) {
+static inline void translateMatrix(float aMatrix[], Vector3Df aPoint) {
     aMatrix[6] = aPoint.x * aMatrix[0] + aPoint.y * aMatrix[3] + aMatrix[6];
     aMatrix[7] = aPoint.x * aMatrix[1] + aPoint.y * aMatrix[4] + aMatrix[7];
+    aMatrix[8] = aPoint.x * aMatrix[2] + aPoint.y * aMatrix[5] + aMatrix[8];
 }
 
 // Transforms the vertices in |aQuad| using |aMatrix| with the results being loaded into |aTransformedQuad|

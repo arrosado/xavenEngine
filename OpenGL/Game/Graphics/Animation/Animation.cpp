@@ -119,11 +119,11 @@ void Animation::Update(float delta) {
     }
 }
 
-void Animation::Render(Vector2Df point, float scale, float rotation) {
-	m_frames[m_currentFrame]->image->Render(point, Size2DfMake(scale, scale), rotation, true);
+void Animation::Render(Vector3Df point, Size2Df scale, Vector3Df rotation) {
+	m_frames[m_currentFrame]->image->Render(point, scale, rotation, true);
 }
 
-void Animation::Render(Vector2Df point) {
+void Animation::Render(Vector3Df point) {
 	m_frames[m_currentFrame]->image->Render(point, true);
 }
 

@@ -30,10 +30,11 @@ void Font::DrawString(Vector2Df point, const string& text) {
 			point.y > 0 - (c->height * scale) ||
 			point.y < GraphicsManager::Instance()->screen.height) {
 
-			Vector2Df newPoint = Vector2DfMake(point.x + (c->xOffset * c->scale),
-											   point.y - (c->height + c->yOffset * c->scale));
+			Vector3Df newPoint = Vector3DfMake(point.x + (c->xOffset * c->scale),
+											   point.y - (c->height + c->yOffset * c->scale),
+                                               0.0f);
 			
-			c->image->Render(newPoint, Size2DfMake(scale, scale), 0.0f, false);
+			c->image->Render(newPoint, Size2DfMake(scale, scale), Vector3DfMake(0.0f, 0.0f, 0.0f), false);
 		}
 		
 		point.x += c->xAdvance * scale;

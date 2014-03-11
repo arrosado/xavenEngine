@@ -55,7 +55,7 @@ namespace Tmx
 		, has_error(false)
 		, error_code(0)
 		, error_text()
-        , position(Vector2DfZero)
+        , position(Vector3DfZero)
         , size(Size2DfZero)
 	{
 		layers.empty(); layers.clear();
@@ -122,7 +122,7 @@ namespace Tmx
 		}
 
 		char* fileText;
-		int fileSize;
+		long fileSize;
 
 		// Open the file for reading.
 		FILE *file = fopen(fileName.c_str(), "rb");

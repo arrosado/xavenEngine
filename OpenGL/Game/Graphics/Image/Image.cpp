@@ -82,11 +82,11 @@ void Image::InitializeImage(const string& name, GLenum filter) {
 	this->textureRatio.width = this->texture->textureRatio.width;
 	this->textureRatio.height = this->texture->textureRatio.height;
 	this->color = Color4fMake(1.0f, 1.0f, 1.0f, 1.0f);
-	this->rotationPoint = Vector2DfZero;
+	this->rotationPoint = Vector3DfZero;
 	this->minMagFilter = filter;
 	
 	// Initialize properties with defaults.
-	this->rotation = 0.0f;
+	this->rotation = Vector3DfZero;
 	this->scale = Size2DfZero;
 	this->flipHorizontally = false;
 	this->flipVertically = false;
@@ -174,17 +174,17 @@ void Image::Render() {
         // the image so that the images origin is rendered in the correct place
         if(this->flipVertically) {
             scaleMatrix(this->matrix, Size2DfMake(1, -1));
-            translateMatrix(this->matrix, Vector2DfMake(0, (-this->imageSize.height * this->scale.height)));
+            translateMatrix(this->matrix, Vector3DfMake(0, (-this->imageSize.height * this->scale.height), 0));
         }
 		
         if(this->flipHorizontally) {
             scaleMatrix(this->matrix, Size2DfMake(-1, 1));
-            translateMatrix(this->matrix, Vector2DfMake((-this->imageSize.width * this->scale.width), 0));
+            translateMatrix(this->matrix, Vector3DfMake((-this->imageSize.width * this->scale.width), 0, 0));
         }
         
 		// No point in calculating a rotation matrix if there is no rotation been set
-        if(this->rotation != 0)
-            rotateMatrix(this->matrix, this->rotationPoint, this->rotation);
+        if(this->rotation.z != 0)
+            rotateMatrix(this->matrix, this->rotationPoint, this->rotation.z);
         
         // No point in calculcating scale if no scale has been set.
 		if(this->scale.width != 1.0f || this->scale.height != 1.0f)
@@ -198,11 +198,11 @@ void Image::Render() {
 	}	
 }
 
-void Image::Render(Vector2Df point) { 
+void Image::Render(Vector3Df point) {
 	this->Render(point, this->scale, this->rotation);
 }
 
-void Image::Render(Vector2Df point, Size2Df scale, float rotation) {
+void Image::Render(Vector3Df point, Size2Df scale, Vector3Df rotation) {
 	this->point = point;
 	this->scale = scale;
 	this->rotation = rotation;
@@ -212,20 +212,21 @@ void Image::Render(Vector2Df point, Size2Df scale, float rotation) {
 
 void Image::Render(bool centered) {
 	this->dirty = true;
-	this->Render(Vector2DfMake(this->point.x, this->point.y), Size2DfZero, this->rotation, centered);
+	this->Render(Vector3DfMake(this->point.x, this->point.y, this->point.z), Size2DfZero, Vector3DfMake(this->rotation.x, this->rotation.y, this->rotation.z), centered);
 }
 
-void Image::Render(Vector2Df point, bool centered) {
+void Image::Render(Vector3Df point, bool centered) {
 	this->Render(point, this->scale, this->rotation, centered);
 }
 
-void Image::Render(Vector2Df point, Size2Df scale, float rotation, bool centered) {
+void Image::Render(Vector3Df point, Size2Df scale, Vector3Df rotation, bool centered) {
 	
 	this->scale = scale;
 	this->rotation = rotation;
     if (centered) {
         this->rotationPoint.x = ((this->imageSize.width * scale.width) / 2);
         this->rotationPoint.y = ((this->imageSize.height * scale.height) / 2);
+        this->rotationPoint.z = point.z;
     }
 	this->point.x = point.x - ((this->imageSize.width * scale.width) / 2);
 	this->point.y = point.y - ((this->imageSize.height * scale.height) / 2);
