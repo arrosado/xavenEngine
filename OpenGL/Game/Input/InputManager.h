@@ -25,6 +25,19 @@ public:
 		return keyStates[key];
 	}
 
+	bool GetPointerState(int *button, int *state, int *x, int *y)
+	{
+		*button = pointerButton;
+		*state = pointerState;
+		*x = pointerX;
+		*y = pointerY;
+
+		return button && 
+			   state && 
+			   x && 
+			   y;
+	}
+
 	GameJoyStick* GetJoystick() {
 		return m_joystick;
 	}
