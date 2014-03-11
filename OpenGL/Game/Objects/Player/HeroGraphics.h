@@ -51,6 +51,12 @@ public:
 		if (this->m_currentAnimation && this->m_currentAnimation == this->m_animations[EntityState::SPAWNING])
 			e->IsReady = (m_currentAnimation->GetAnimationState() == AnimationState::AS_STOPPED) ? true : false;
 
+        if (this->m_currentAnimation &&
+            this->m_currentAnimation == this->m_animations[EntityState::LANDING] &&
+            this->m_currentAnimation->GetAnimationState() == AnimationState::AS_STOPPED)
+            e->state = EntityState::IDLE;
+            
+        
 		switch(e->state) {
 		case EntityState::SLIDING:
 		case EntityState::STOPPING:

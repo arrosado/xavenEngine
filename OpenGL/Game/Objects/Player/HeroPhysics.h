@@ -6,7 +6,7 @@
 #include <Game/Physics/PhysicsCommon.h>
 #include <Game/Physics/IPhysicsComponent.h>
 
-#define MAX_SPEED 1
+#define MAX_SPEED 10.0f
 
 class HeroPhysics: public IPhysicsComponent { 
 public:
@@ -37,7 +37,7 @@ public:
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shapeDef;
 		fixtureDef.density = 2.0f;
-		fixtureDef.friction = 0.1;
+		fixtureDef.friction = 1.0f;
 		fixtureDef.restitution = 0.1;
 
 		this->m_fixture = m_body->CreateFixture(&fixtureDef);
@@ -79,8 +79,7 @@ public:
 			body->SetAwake(true);
             
 			if (fabs(velocity.x) < MAX_SPEED)
-                //body->ApplyForce(b2Vec2(fabs(velocity.x) + ((right) ? + 1 : -1) * currentSpeed, body->GetLocalCenter().y), body->GetLocalCenter());
-				body->SetLinearVelocity(b2Vec2(fabs(velocity.x) + ((right) ? + 1 : - 1) * currentSpeed, velocity.y));
+                body->ApplyLinearImpulse(b2Vec2(fabs(velocity.x) + ((right) ? + 1: -1) * currentSpeed, body->GetLocalCenter().y), body->GetWorldCenter());
 		}
         
 		if (up &&
