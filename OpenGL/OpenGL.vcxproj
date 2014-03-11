@@ -93,7 +93,9 @@
     <ClInclude Include="Game\Entities\Hero\HeroPhysics.h" />
     <ClInclude Include="Game\Entities\IEntity.h" />
     <ClInclude Include="Game\Graphics\Console\Console.h" />
+    <ClInclude Include="Game\Scenes\GameLevel.h" />
     <ClInclude Include="Game\Scenes\GameSceneManager.h" />
+    <ClInclude Include="Game\Scenes\IGameScene.h" />
     <ClInclude Include="Game\Scenes\InputManager.h" />
     <ClInclude Include="Game\Scenes\States\GameLevel.h" />
     <ClInclude Include="Game\Scenes\States\IGameScene.h" />
@@ -183,9 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Core\Game.cpp" />
+    <ClCompile Include="Game\Scenes\GameLevel.cpp" />
     <ClCompile Include="Game\Scenes\GameSceneManager.cpp" />
     <ClCompile Include="Game\Input\InputManager.cpp" />
-    <ClCompile Include="Game\Scenes\States\GameLevel.cpp" />
     <ClCompile Include="Game\Graphics\Camera.cpp" />
     <ClCompile Include="Game\Graphics\Font\Font.cpp" />
     <ClCompile Include="Game\Graphics\Font\CharDef.cpp" />

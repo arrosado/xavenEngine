@@ -312,6 +312,12 @@
     <ClInclude Include="Game\Graphics\Console\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Scenes\GameLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\IGameScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -606,6 +612,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\Sound\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\GameLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

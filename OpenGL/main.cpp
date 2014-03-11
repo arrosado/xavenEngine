@@ -17,6 +17,8 @@
 #include <glut.h>
 #endif
 #include <Game/IGame.h>
+#include <Game/Graphics/Image/Image.h>
+#include <Game/Graphics/GraphicsCommon.h>
 
 
 #define WIDTH 600
@@ -44,6 +46,12 @@ void Draw();
 void Draw(void)
 {
 	game->Render();
+    
+    //Image *image = new Image(RESOURCES_FOLDER "run.png", GL_LINEAR);
+    //
+    //image->Render(Vector3DfMake(-200.0f, 0.0f, 0.0f));
+    //
+    //delete image;
     
     glutSwapBuffers();
 }
