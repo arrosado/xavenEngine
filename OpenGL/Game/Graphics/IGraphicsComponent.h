@@ -26,7 +26,7 @@ public:
 
 	void Render(){
 		if (this->m_currentAnimation)
-			this->m_currentAnimation->Render(this->m_entity->position, 1.0f/PTM_RATIO, this->m_entity->rotation);
+			this->m_currentAnimation->Render(Vector2DfMake(this->m_entity->position.x, this->m_entity->position.y), 1.0f/PTM_RATIO, this->m_entity->rotation.z);
 	}
 
 	bool CurrentAnimationFinished() { 

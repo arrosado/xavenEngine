@@ -28,6 +28,8 @@ public:
 
 		this->m_fixture = this->m_body->CreateFixture(&fixtureDef);
 	}
+    
+    void HandleEvents() { }
 };
 
 

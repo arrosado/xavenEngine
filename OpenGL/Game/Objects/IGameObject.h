@@ -43,15 +43,13 @@ enum EntityDirection {
 struct IGameObject {
 public: 
 	std::string name;
-	float width;
-	float height;
-	float rotation;
 	bool IsReady;
 	bool IsOnGround;
-	Vector2Df position;
-	Vector2Df velocity;
 	EntityDirection direction;
 	EntityState state;
+    Vector3Df translation;
+    Vector3Df position;
+    Vector3Df rotation;
 
 	virtual void HandleEvents() = 0;
 	virtual void Update(float delta) = 0;

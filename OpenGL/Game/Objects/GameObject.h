@@ -33,8 +33,8 @@ public:
 		 * applies the PTM_Ratio to all the fields
 		 * it needs.
 		 */
+        if (m_graphics) m_graphics->Update(delta);
 		if (m_physics) m_physics->Update(delta);
-		if (m_graphics) m_graphics->Update(delta);
 		if (m_audio) m_audio->Update(delta);
 	}
 

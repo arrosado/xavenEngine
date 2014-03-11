@@ -76,16 +76,16 @@ public:
 
 		return NULL;
 	}
+    
+    virtual void HandleEvents() = 0;
 
 	virtual void Update(float delta) {
 		float a = this->m_body->GetAngle();
 		b2Vec2 p = this->m_body->GetPosition();
-		b2Vec2 v = this->m_body->GetLinearVelocity();
 		IGameObject* e = ((IGameObject*)this->m_body->GetUserData());
 		
-		e->position = Vector2DfMake(p.x, p.y);//Vector2DfMake(GetUnRealWH(p.x), GetUnRealWH(p.y));
-		e->velocity = Vector2DfMake(v.x, v.y);
-		e->rotation = a * (180.0f/b2_pi);
+		e->position = Vector3DfMake(p.x, p.y, 0.0f);
+		e->rotation = Vector3DfMake(0.0f, 0.0f, a * (180.0f/b2_pi));
 	}
 };
 

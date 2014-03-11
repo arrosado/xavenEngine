@@ -29,6 +29,8 @@ public:
 
 		this->m_fixture = m_body->CreateFixture(&fixtureDef);
 	}
+    
+    void HandleEvents() {}
 };
 
 #endif 
