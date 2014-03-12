@@ -39,10 +39,8 @@ Texture texture;
 
 // What's this???? [Start]
 TexturedColoredVertex *iva = NULL;
-GLushort *ivaIndices = NULL;
+GLushort ivaIndices[6];
 GLuint textureIndices[MAX_TEXTURES_PER_APP][MAX_IMAGES_PER_FRAME];
-GLuint texturesToRender[MAX_TEXTURES_PER_APP];
-GLuint imageCountForTexture[MAX_IMAGES_PER_FRAME];
 GLuint renderTextureCount;
 GLushort ivaIndex;
 ImageDetails *image = NULL;
@@ -85,7 +83,7 @@ void Draw(void)
     // images matrix and transform the vertices.  If dirty is set we also check to see if it is
     // necessary to adjust the rotation and scale.  If they are 0 then nothing needs to
     // be done and we can save some cycles.
-    if (dirty) {
+    /*if (dirty) {
         // Load the identity matrix before applying transforming the matrix for this image.  The
         // order in which the transformations are applied is important.
         loadIdentityMatrix(matrix);
@@ -119,7 +117,7 @@ void Draw(void)
         
         // Mark the image as now clean
 		dirty = false;
-	}
+	}*/
     // Modify matrix here! [End]
     
     grid->Draw(GridType::XGrid);
@@ -153,20 +151,21 @@ void Draw(void)
 	// Populate the vertex, texcoord and colorpointers with our interleaved vertex data
     glVertexPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].geometryVertex);
     glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].textureVertex);
-    glColorPointer(4,GL_FLOAT,sizeof(TexturedColoredVertex), &iva[0].vertexColor);
+    glColorPointer(4,GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].vertexColor);
 	
 	glBindTexture(GL_TEXTURE_2D, texture.texture->name);
 		
     GLuint index = 0;
-    ivaIndices[0] = index;     // Bottom left
-    ivaIndices[1] = index+2;   // Top Left
-    ivaIndices[2] = index+1;   // Bottom right
-    ivaIndices[3] = index+1;   // Bottom right
-    ivaIndices[4] = index+2;   // Top left
-    ivaIndices[5] = index+3;   // Top right
+    int vertexCounter = 0;
+    ivaIndices[vertexCounter++] = index;     // Bottom left
+    ivaIndices[vertexCounter++] = index+2;   // Top Left
+    ivaIndices[vertexCounter++] = index+1;   // Bottom right
+    ivaIndices[vertexCounter++] = index+1;   // Bottom right
+    ivaIndices[vertexCounter++] = index+2;   // Top left
+    ivaIndices[vertexCounter++] = index+3;   // Top right
 		
     // Now load the indices array with indexes into the IVA, we draw those triangles to the screen.
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ivaIndices);
+    glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
     
 	glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -404,11 +403,6 @@ void initGame(int w, int h)
     
     // What's this???? [Start]
     iva = (TexturedColoredVertex*)calloc(MAX_IMAGES_PER_FRAME, sizeof(TexturedColoredQuad));
-	ivaIndices = (GLushort*)calloc(MAX_IMAGES_PER_FRAME * 6, sizeof(GLushort));
-	
-	ivaIndex = 0;
-	renderTextureCount = 0;
-	memset(imageCountForTexture, 0, MAX_IMAGES_PER_FRAME);
     // What's this???? [End]
     
     
