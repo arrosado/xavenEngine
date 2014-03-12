@@ -16,6 +16,7 @@
 #else
 #include <glut.h>
 #endif
+#include <Game/IComponent.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Graphics/IGameCamera.h>
 #include <Game/Graphics/Console/Console.h>
@@ -35,15 +36,23 @@ IGameCamera *camera = NULL;
 Texture2D *textureLoader = NULL;
 Texture texture;
 
+Vector3Df cam_position = Vector3DfZero;
+Vector3Df cam_rotation = Vector3DfZero;
 
 
 // What's this???? [Start]
-TexturedColoredVertex *iva = NULL;
-GLushort ivaIndices[6];
-GLuint textureIndices[MAX_TEXTURES_PER_APP][MAX_IMAGES_PER_FRAME];
-GLuint renderTextureCount;
-GLushort ivaIndex;
-ImageDetails *image = NULL;
+static const GLfloat vertices[] = { -0.5f, -0.33f,
+0.5f, -0.33f,
+-0.5f, 0.33f,
+0.5f, 0.33f };
+
+static const GLubyte colors[] = {
+255, 255, 0, 255,
+0, 255, 255, 255,
+0, 0, 0, 0,
+255, 0, 255, 255
+};
+
 float matrix[9];
 bool dirty = false;
 Vector3Df point;
@@ -71,8 +80,9 @@ void Draw();
 
 void Draw(void)
 {
-    camera->PrepareNewFrame();
-    
+	glClearColor(0.60f, 0.70f, 0.85f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     // Working : image->Render();
     // Working : image->Render(Vector3DfMake(0.0f, 0.0f, 0.0f), true);
     // Working : image->Render(Vector3DfMake(0.0f, 0.0f, 0.0f));
@@ -145,30 +155,22 @@ void Draw(void)
 		glEnable(GL_DEPTH_TEST);
     
 	glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     
 	// Populate the vertex, texcoord and colorpointers with our interleaved vertex data
-    glVertexPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].geometryVertex);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].textureVertex);
-    glColorPointer(4,GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].vertexColor);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    //glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &iva[0].textureVertex);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
 	
-	glBindTexture(GL_TEXTURE_2D, texture.texture->name);
-		
-    GLuint index = 0;
-    int vertexCounter = 0;
-    ivaIndices[vertexCounter++] = index;     // Bottom left
-    ivaIndices[vertexCounter++] = index+2;   // Top Left
-    ivaIndices[vertexCounter++] = index+1;   // Bottom right
-    ivaIndices[vertexCounter++] = index+1;   // Bottom right
-    ivaIndices[vertexCounter++] = index+2;   // Top left
-    ivaIndices[vertexCounter++] = index+3;   // Top right
+	//glBindTexture(GL_TEXTURE_2D, texture.texture->name);
 		
     // Now load the indices array with indexes into the IVA, we draw those triangles to the screen.
-    glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
+    //glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
 	glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     
     
@@ -324,7 +326,7 @@ void Update(int value) {
     
     Console* c = Console::Instance();
 	
-	c->Write("Image Rotation = %.1f", rotation);
+	c->Write("Image Rotation = %.1f", rotationAngle);
 	c->Write("Image rotating %s", clockwise ? "Clockwise" : "CounterClockwise");
     
     
@@ -334,7 +336,64 @@ void Update(int value) {
 }
 
 void HandleResize(int w, int h) {
-    camera->InitializeOpenGL(w, h);
+	/*
+	* Initialize the Screen Orientation.
+	*
+	* Switch to GL_PROJECTION matrix mode
+	* and reset the current matrix with the
+	* identity matrix
+	*/
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	/*
+	* Switch the orientation of the view port
+	* to match the current device orientation.
+	*
+	* {0, 0} at the middle of the screen.
+	*/
+
+	glViewport(0, 0, w, h);
+
+	GLdouble fov, aspect, zNear, zFar, xmin, xmax, ymin, ymax;
+
+	fov = 45.0f; // Field of view.
+	aspect = w / h; // Aspect ratio of screen.
+	zNear = 2;
+	zFar = 1000000;
+
+	ymax = zNear * tan(fov * M_PI / 360.0f);
+	ymin = -ymax;
+	xmin = ymin * aspect;
+	xmax = ymax * aspect;
+
+
+	glFrustum(xmin, xmax, ymin, ymax, zNear, zFar); /* 3D camera type */
+	//glOrtho(-w/2, w/2, -h/2, h/2, zNear, zFar);
+
+	/*
+	* Switch to GL_MODELVIEW so we can now draw our objects
+	*/
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	/* Camera local coordinate system translation.
+	* If moving the camera in its local coordinate system is desired,
+	* then the translation has to be done before any rotation. If
+	* translation is done after rotating, then the translation will
+	* be executed on world coordinates.
+	*/
+	glTranslatef(cam_position.x, cam_position.y, cam_position.z);
+
+	/*
+	* Rotate the projection matrix on the cameras
+	* local coordinate system.
+	*/
+	glRotatef(cam_rotation.x, 1.0f, 0.0f, 0.0f);
+	glRotatef(cam_rotation.y, 0.0f, 1.0f, 0.0f);
+	glRotatef(cam_rotation.z, 0.0f, 0.0f, 1.0f);
+
+	//glTranslatef(this->position.x, this->position.y, this->position.z);
 }
 
 void HandleKeyPress(unsigned char key, int x, int y)
@@ -385,7 +444,7 @@ void HandleMouseMotion(int x, int y){
 void initGame(int w, int h)
 {
     camera = CreateGameCamera();
-    camera->InitializeOpenGL(w, h);
+	HandleResize(w, h);
     
     InputManager::Instance()->Init(3, w, h, 100);
     Console::Instance()->Init(0);
@@ -400,46 +459,6 @@ void initGame(int w, int h)
 	texture.retainCount = 0;
 	texture.retainCount++;
     // Load texture [End]
-    
-    // What's this???? [Start]
-    iva = (TexturedColoredVertex*)calloc(MAX_IMAGES_PER_FRAME, sizeof(TexturedColoredQuad));
-    // What's this???? [End]
-    
-    
-    // Initialize image [Start]
-    image = (ImageDetails*)calloc(1, sizeof(ImageDetails));
-    image->texturedColoredQuad = (TexturedColoredQuad*)calloc(1, sizeof(TexturedColoredQuad));
-    
-    // Set up the geometry for the image
-    image->texturedColoredQuad->vertex1.geometryVertex = Vector2DfMake(0.0f, 0.0f);
-    image->texturedColoredQuad->vertex2.geometryVertex = Vector2DfMake(textureLoader->contentSize.width, 0.0f);
-    image->texturedColoredQuad->vertex3.geometryVertex = Vector2DfMake(0.0f, textureLoader->contentSize.height);
-    image->texturedColoredQuad->vertex4.geometryVertex = Vector2DfMake(textureLoader->contentSize.width, textureLoader->contentSize.height);
-    
-    // Setup texture uv
-    Vector2Df textureOffset = Vector2DfZero;
-    Size2Df textureSize = Size2DfMake(textureLoader->maxS, textureLoader->maxT);
-    image->texturedColoredQuad->vertex1.textureVertex = Vector2DfMake(textureOffset.x, textureOffset.y);
-	image->texturedColoredQuad->vertex2.textureVertex = Vector2DfMake(textureSize.width, textureOffset.y);
-	image->texturedColoredQuad->vertex3.textureVertex = Vector2DfMake(textureOffset.x, textureSize.height);
-	image->texturedColoredQuad->vertex4.textureVertex = Vector2DfMake(textureSize.width, textureSize.height);
-    
-    // Set up the vertex colors.  To start with these are all 1.0's
-    image->texturedColoredQuad->vertex1.vertexColor =
-    image->texturedColoredQuad->vertex2.vertexColor =
-    image->texturedColoredQuad->vertex3.vertexColor =
-    image->texturedColoredQuad->vertex4.vertexColor = Color4fMake(1.0f, 1.0f, 1.0f, 1.0f);;
-	
-    // Set the imageDetails textureName
-    image->textureName = textureLoader->name;
-    
-    rotationPoint = Vector3DfZero;
-    rotation = Vector3DfZero;
-	scale = Size2DfZero;
-	flipHorizontally = false;
-	flipVertically = false;
-    
-    //Initialize image [End]
 }
 
 void endGame()
@@ -452,25 +471,9 @@ void endGame()
     Console::Instance()->Cleanup();
     delete Console::Instance();
     
-    delete image;
     delete grid;
     delete camera;
     delete textureLoader;
-    
-    // What's this???? [Start]
-    if (iva)
-		free(iva);
-	
-	if (ivaIndices)
-		free(ivaIndices);
-	
-    // What's this???? [End]
-    
-    if (image->texturedColoredQuad)
-        free(image->texturedColoredQuad);
-    
-    if (image)
-        free(image);
 }
 
 #ifdef _WIN32

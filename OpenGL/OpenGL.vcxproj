@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,12 +20,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -57,7 +59,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Lib;C:\Sandbox\OpenGL\OpenGL\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -82,38 +84,18 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Core\Game.h" />
-    <ClInclude Include="Game\Entities\Box\Box.h" />
-    <ClInclude Include="Game\Entities\Box\BoxPhysics.h" />
-    <ClInclude Include="Game\Entities\Circle\Circle.h" />
-    <ClInclude Include="Game\Entities\Circle\CirclePhysics.h" />
-    <ClInclude Include="Game\Entities\Entity.h" />
-    <ClInclude Include="Game\Entities\Hero\Hero.h" />
-    <ClInclude Include="Game\Entities\Hero\HeroGraphics.h" />
-    <ClInclude Include="Game\Entities\Hero\HeroPhysics.h" />
-    <ClInclude Include="Game\Entities\IEntity.h" />
     <ClInclude Include="Game\Graphics\Console\Console.h" />
-    <ClInclude Include="Game\Scenes\GameLevel.h" />
-    <ClInclude Include="Game\Scenes\GameSceneManager.h" />
-    <ClInclude Include="Game\Scenes\IGameScene.h" />
     <ClInclude Include="Game\Scenes\InputManager.h" />
-    <ClInclude Include="Game\Scenes\States\GameLevel.h" />
-    <ClInclude Include="Game\Scenes\States\IGameScene.h" />
     <ClInclude Include="Game\Graphics\Font\Font.h" />
     <ClInclude Include="Game\Graphics\Font\CharDef.h" />
-    <ClInclude Include="Game\Graphics\Animation\Animation.h" />
     <ClInclude Include="Game\Graphics\GraphicsCommon.h" />
     <ClInclude Include="Game\Graphics\GraphicsManager.h" />
     <ClInclude Include="Game\Graphics\Grid\Grid.h" />
     <ClInclude Include="Game\Graphics\IGameCamera.h" />
-    <ClInclude Include="Game\Graphics\Image\Image.h" />
     <ClInclude Include="Game\Graphics\libpng\png.h" />
     <ClInclude Include="Game\Graphics\libpng\pngconf.h" />
     <ClInclude Include="Game\Graphics\Motion.h" />
-    <ClInclude Include="Game\Graphics\Particles\ParticleEmitter.h" />
-    <ClInclude Include="Game\Graphics\SpriteSheet\SpriteSheet.h" />
     <ClInclude Include="Game\Graphics\Texture2D\Texture2D.h" />
-    <ClInclude Include="Game\Graphics\IGraphicsComponent.h" />
     <ClInclude Include="Game\Graphics\zlib\crc32.h" />
     <ClInclude Include="Game\Graphics\zlib\deflate.h" />
     <ClInclude Include="Game\Graphics\zlib\gzguts.h" />
@@ -128,70 +110,15 @@
     <ClInclude Include="Game\IComponent.h" />
     <ClInclude Include="Game\IGame.h" />
     <ClInclude Include="Game\Input\JoyStick.h" />
-    <ClInclude Include="Game\Physics\Box2D\Box2D.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\b2BroadPhase.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\b2Collision.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\b2Distance.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\b2DynamicTree.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\b2TimeOfImpact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\Shapes\b2ChainShape.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\Shapes\b2CircleShape.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\Shapes\b2EdgeShape.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\Shapes\b2PolygonShape.h" />
-    <ClInclude Include="Game\Physics\Box2D\Collision\Shapes\b2Shape.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2BlockAllocator.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2Draw.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2GrowableStack.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2Math.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2Settings.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2StackAllocator.h" />
-    <ClInclude Include="Game\Physics\Box2D\Common\b2Timer.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2Body.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2ContactManager.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2Fixture.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2Island.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2TimeStep.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2World.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\b2WorldCallbacks.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2CircleContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2Contact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2GearJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2Joint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2MouseJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2RopeJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2WeldJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Dynamics\Joints\b2WheelJoint.h" />
-    <ClInclude Include="Game\Physics\Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="Game\Physics\DebugDraw.h" />
-    <ClInclude Include="Game\Physics\PhysicsCommon.h" />
-    <ClInclude Include="Game\Physics\IPhysicsComponent.h" />
-    <ClInclude Include="Game\Sound\IAudioComponent.h" />
-    <ClInclude Include="Game\Sound\SoundCommon.h" />
-    <ClInclude Include="Game\Sound\SoundManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Core\Game.cpp" />
-    <ClCompile Include="Game\Scenes\GameLevel.cpp" />
-    <ClCompile Include="Game\Scenes\GameSceneManager.cpp" />
+    <ClCompile Include="Game\Graphics\Console\Console.cpp" />
     <ClCompile Include="Game\Input\InputManager.cpp" />
     <ClCompile Include="Game\Graphics\Camera.cpp" />
     <ClCompile Include="Game\Graphics\Font\Font.cpp" />
     <ClCompile Include="Game\Graphics\Font\CharDef.cpp" />
-    <ClCompile Include="Game\Graphics\Animation\Animation.cpp" />
     <ClCompile Include="Game\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="Game\Graphics\Grid\Grid.cpp" />
     <ClCompile Include="Game\Graphics\Image\Image.cpp" />
@@ -215,8 +142,6 @@
     <ClCompile Include="Game\Graphics\libpng\pngwtran.c" />
     <ClCompile Include="Game\Graphics\libpng\pngwutil.c" />
     <ClCompile Include="Game\Graphics\Motion.cpp" />
-    <ClCompile Include="Game\Graphics\Particles\ParticleEmitter.cpp" />
-    <ClCompile Include="Game\Graphics\SpriteSheet\SpriteSheet.cpp" />
     <ClCompile Include="Game\Graphics\Texture2D\Texture2D.cpp" />
     <ClCompile Include="Game\Graphics\zlib\adler32.c" />
     <ClCompile Include="Game\Graphics\zlib\compress.c" />
@@ -233,53 +158,6 @@
     <ClCompile Include="Game\Graphics\zlib\trees.c" />
     <ClCompile Include="Game\Graphics\zlib\uncompr.c" />
     <ClCompile Include="Game\Graphics\zlib\zutil.c" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2BroadPhase.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2CollideCircle.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2CollideEdge.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2CollidePolygon.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2Collision.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2Distance.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2DynamicTree.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\b2TimeOfImpact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\Shapes\b2ChainShape.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\Shapes\b2CircleShape.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2BlockAllocator.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2Draw.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2Math.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2Settings.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2StackAllocator.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Common\b2Timer.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2Body.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2ContactManager.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2Fixture.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2Island.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2World.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\b2WorldCallbacks.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2Contact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2Joint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
-    <ClCompile Include="Game\Physics\Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="Game\Physics\DebugDraw.cpp" />
-    <ClCompile Include="Game\Sound\SoundManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
