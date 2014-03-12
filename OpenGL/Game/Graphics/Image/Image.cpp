@@ -210,10 +210,9 @@ void Image::Render(Vector3Df point, Size2Df scale, Vector3Df rotation) {
 	this->Render();
 }
 
-void Image::Render(bool centered) {
-	this->dirty = true;
-	this->Render(Vector3DfMake(this->point.x, this->point.y, this->point.z), Size2DfZero, Vector3DfMake(this->rotation.x, this->rotation.y, this->rotation.z), centered);
-}
+//void Image::Render(bool centered) {
+//	this->Render(this->point, this->scale, this->rotation, centered);
+//}
 
 void Image::Render(Vector3Df point, bool centered) {
 	this->Render(point, this->scale, this->rotation, centered);

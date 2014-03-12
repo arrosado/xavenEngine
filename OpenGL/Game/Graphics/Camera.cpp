@@ -11,9 +11,9 @@
 #include <Game/Graphics/Motion.h>
 #include <math.h>
 
-#define DEFAULT_MOTION_ANIMATION_DURATION 0.5f
+#define DEFAULT_MOTION_ANIMATION_DURATION 0.15f
 #define DEFAULT_MOTION_ANIMATION_SPEED 1.0f
-#define INITIAL_Z_POSITION -150.0f
+#define INITIAL_Z_POSITION -850.0f
 
 class Camera : public IGameCamera {
 private:
@@ -186,7 +186,30 @@ void Camera::Update(float delta) {
 			updated = true;
 
 	if (updated)
-		this->InitializeOpenGL(this->screen.width, this->screen.height);
+    {
+        /*
+         * Switch to GL_MODELVIEW so we can now draw our objects
+         */
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        
+        /* Camera local coordinate system translation.
+         * If moving the camera in its local coordinate system is desired,
+         * then the translation has to be done before any rotation. If
+         * translation is done after rotating, then the translation will
+         * be executed on world coordinates.
+         */
+        glTranslatef(this->position.x, this->position.y, this->position.z);
+        
+        /*
+         * Rotate the projection matrix on the cameras
+         * local coordinate system.
+         */
+        glRotatef(this->rotation.x, 1.0f, 0.0f, 0.0f);
+        glRotatef(this->rotation.y, 0.0f, 1.0f, 0.0f);
+        glRotatef(this->rotation.z, 0.0f, 0.0f, 1.0f);
+    }
+		//this->InitializeOpenGL(this->screen.width, this->screen.height);
 }
 
 void Camera::Move(float x, float y, float z) {

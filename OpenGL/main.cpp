@@ -16,9 +16,12 @@
 #else
 #include <glut.h>
 #endif
-#include <Game/IGame.h>
 #include <Game/Graphics/Image/Image.h>
 #include <Game/Graphics/GraphicsCommon.h>
+#include <Game/Graphics/Console/Console.h>
+#include <Game/Graphics/Grid/Grid.h>
+#include <Game/Graphics/Texture2D/Texture2D.h>
+#include <Game/Input/InputManager.h>
 
 
 #define WIDTH 600
@@ -27,8 +30,8 @@
 #define UPDATE_INTERVAL .25
 
 float mouseX, mouseY, rotateX, rotateY;
-
-IGameEngine *game = CreateGame();
+Image *image = NULL;
+Grid* grid = NULL;
 
 /* Function Prototypes */
 void HandleResize(int w, int h);
@@ -45,13 +48,18 @@ void Draw();
 
 void Draw(void)
 {
-	game->Render();
+    GraphicsManager::Instance()->PrepareNewFrame();
     
-    //Image *image = new Image(RESOURCES_FOLDER "run.png", GL_LINEAR);
-    //
-    //image->Render(Vector3DfMake(-200.0f, 0.0f, 0.0f));
-    //
-    //delete image;
+    image->Render();
+    // Working : image->Render(Vector3DfMake(0.0f, 0.0f, 0.0f), true);
+    // Working : image->Render(Vector3DfMake(0.0f, 0.0f, 0.0f));
+    // Working : image->Render(Vector3DfMake(-100.0f, 0.0f, 0.0f), Size2DfMake(0.5f, 0.5f), Vector3DfMake(1.0f, 0.0f, 0.0f));
+    
+    grid->Draw(GridType::XGrid);
+    
+    Console::Instance()->Draw();
+	
+    GraphicsManager::Instance()->RenderNewFrame();
     
     glutSwapBuffers();
 }
@@ -59,8 +67,37 @@ void Draw(void)
 void Update(int value) {
     
 	const double delta = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+    static double lastFrameTime = 0.0f;
     
-	game->Update(delta);
+    InputManager::Instance()->HandleEvents();
+    InputManager ::Instance()->Update((delta - lastFrameTime));
+
+    GraphicsManager::Instance()->HandleEvents();
+    GraphicsManager::Instance()->Update((delta - lastFrameTime));
+    
+    Console::Instance()->HandleEvents();
+    Console::Instance()->Update((delta - lastFrameTime));
+    
+    lastFrameTime = delta;
+    
+    static float rotation = 0.0f;
+    
+    bool rotate = InputManager::Instance()->GetKeyState('r');
+    bool clockwise = InputManager::Instance()->GetKeyState('e');
+    
+    if (fabs(rotation) > 360.0f)
+        rotation = 0.0f;
+    
+    if (rotate)
+        rotation += clockwise ? -1 : 1;
+    
+    image->SetRotation(Vector3DfMake(0.0f, 0.0f, rotation));
+    
+    Console* c = Console::Instance();
+	
+	c->Write("Image Rotation = %.1f", rotation);
+	c->Write("Image rotating %s", clockwise ? "Clockwise" : "CounterClockwise");
+    
     
 	glutPostRedisplay();
     
@@ -68,12 +105,12 @@ void Update(int value) {
 }
 
 void HandleResize(int w, int h) {
-	game->ResizeView(w, h);
+    GraphicsManager::Instance()->ResizeView(w, h);
 }
 
 void HandleKeyPress(unsigned char key, int x, int y)
 {
-	game->UpdateInput(key, true, 0, false, x, y);
+    if (key >= 0) InputManager::Instance()->SetKeyState(key, true);
     
     switch (key)
     {
@@ -82,34 +119,29 @@ void HandleKeyPress(unsigned char key, int x, int y)
             exit(0);
             break;
     }
-    
-    glutPostRedisplay();
 }
 
 void HandleKeyRelease(unsigned char key, int x, int y)
 {
-	game->UpdateInput(key, false, 0, false, x, y);
-    glutPostRedisplay();
+    if (key >= 0) InputManager::Instance()->SetKeyState(key, false);
 }
 
 void HandleSpecialKeyPress(int key, int x, int y) {
-	game->UpdateInput(key, true, 0, false, x, y);
-	glutPostRedisplay();
+    if (key >= 0) InputManager::Instance()->SetKeyState(key, true);
 }
 
 void HandleSpecialKeyRelease(int key, int x, int y) {
-	game->UpdateInput(key, false, 0, false, x, y);
-	glutPostRedisplay();
+    if (key >= 0) InputManager::Instance()->SetKeyState(key, false);
 }
 
 void HandleMouse(int button, int state, int x, int y) {
-	game->UpdateInput(-1, false, button, state, x, y);
+    InputManager::Instance()->UpdatePointer(button, state, x, y);
 }
 
 void HandleMousePassive(int x, int y){
     mouseX = x;
     mouseY = y;
-	game->UpdateInput(-1, false, -1, false, x, y);
+    InputManager::Instance()->UpdatePointer(-1, false, x, y);
 }
 
 void HandleMouseMotion(int x, int y){
@@ -119,8 +151,34 @@ void HandleMouseMotion(int x, int y){
     rotateY += (mouseY-y)/SPEED;
     
     HandleMousePassive(x, y);
+}
+
+void initGame(int w, int h)
+{
+    GraphicsManager::Instance()->Init(2, w, h);
+    InputManager::Instance()->Init(3, w, h, 100);
+    Console::Instance()->Init(0);
+    image = new Image(RESOURCES_FOLDER "run.png", GL_LINEAR);
+    grid = new Grid(20, 20, 20);
+
+}
+
+void endGame()
+{
+    InputManager::Instance()->Quit();
+    InputManager::Instance()->Cleanup();
+    delete InputManager::Instance();
     
-    glutPostRedisplay();
+    GraphicsManager::Instance()->Quit();
+    GraphicsManager::Instance()->Cleanup();
+    delete GraphicsManager::Instance();
+    
+    Console::Instance()->Quit();
+    Console::Instance()->Cleanup();
+    delete Console::Instance();
+    
+    delete image;
+    delete grid;
 }
 
 #ifdef _WIN32
@@ -161,14 +219,11 @@ int _tmain(int argc, _TCHAR* argv[]) {
         
         glutTimerFunc(UPDATE_INTERVAL, Update, 0);
         
-        game->Initialize(WIDTH, HEIGHT);
+        initGame(WIDTH, HEIGHT);
         
         glutMainLoop();
         
-        game->Exit(true);
-        
-        //DestroyGame(game);
-        delete game;
+        endGame();
         
         return 0;
     }

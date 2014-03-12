@@ -105,7 +105,7 @@ public:
 	void Render();
 	void Render(Vector3Df point);
 	void Render(Vector3Df point, Size2Df scale, Vector3Df rotation);
-	void Render(bool centered);
+	//void Render(bool centered);
 	void Render(Vector3Df point, bool centered);
 	void Render(Vector3Df point, Size2Df scale, Vector3Df rotation, bool centered);
 	

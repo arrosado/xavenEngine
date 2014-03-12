@@ -1,5 +1,4 @@
 #include <Game/Graphics/Console/Console.h>
-#include <Game/Physics/PhysicsCommon.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <cstdio>
 #include <cstdarg>
@@ -30,7 +29,6 @@ void Console::Write(const char* message, ...) {
 
 void Console::Draw() { 
 	for(int i = 0; i < m_messages.size(); i++) {
-		const b2Vec2 point(0.0f, 58.0f - (i*2.5f));
 		
 		// Setup the projection and modelview matrices for 2D rendering.
 		glMatrixMode(GL_PROJECTION);

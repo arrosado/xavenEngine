@@ -225,10 +225,10 @@ void GraphicsManager::HandleEvents() {
 
 	InputManager * i = InputManager::Instance();
 
-	up = i->GetKeyState('8');
-	down = i->GetKeyState('2');
-	right = i->GetKeyState('6');
-	left = i->GetKeyState('4');
+	up = i->GetKeyState('i');
+	down = i->GetKeyState('k');
+	right = i->GetKeyState('l');
+	left = i->GetKeyState('j');
 	camera = i->GetKeyState('c');
 
 	if (i->GetKeyState('z'))

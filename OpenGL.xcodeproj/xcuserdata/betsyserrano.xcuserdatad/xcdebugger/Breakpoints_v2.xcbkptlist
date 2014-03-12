@@ -38,16 +38,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGL/Game/Graphics/Image/Image.cpp"
-            timestampString = "416194566.125936"
+            timestampString = "416283361.822353"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "Image::Render()"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "Image::Render(bool centered)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
