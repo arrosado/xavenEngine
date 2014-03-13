@@ -21,6 +21,7 @@ public:
 	void DrawBox(float boxSize);
 
 	void SetPosition(float x, float y, float z);
+	void SetColor(Color4f color);
 
 private:
 	Color4f m_color;

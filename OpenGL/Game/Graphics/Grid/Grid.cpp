@@ -38,6 +38,11 @@ void Grid::SetPosition(float x, float y, float z) {
 	this->m_position.z = z;
 }
 
+void Grid::SetColor(Color4f color)
+{
+	this->m_color = color;
+}
+
 void Grid::Draw(GridType type) {
 	glColor4f(this->m_color.red, this->m_color.green, this->m_color.blue, this->m_color.alpha);
 
