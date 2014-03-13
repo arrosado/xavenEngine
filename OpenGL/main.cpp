@@ -172,7 +172,8 @@ void HandleResize(int w, int h) {
 	//glOrtho(-w, w, -h, h, zNear, zFar);
     //gluOrtho2D(0.0f, (GLdouble)w, 0.0f, (GLdouble)h);
 	//gluOrtho2D(-w / 2, w / 2, -h / 2, h / 2);
-	gluPerspective(45.0f, w / h, zNear, zFar);
+	//gluPerspective(45.0f, w / h, zNear, zFar);
+	__gluPerspective(45.0f, w / h, zNear, zFar);
     
 	/*
 	* Switch to GL_MODELVIEW so we can now draw our objects
