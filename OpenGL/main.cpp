@@ -32,16 +32,17 @@ Texture texture;
 
 static const GLfloat vertices[] = { 0.0f, 0.0f,
 10.0f, 0.0f,
-5.0f, 5.0f };
+0.0f, 10.0f,
+10.0f, 10.0f };
 
 GLfloat rotation = 0.0f;
 GLfloat zoom = 0.0f;
 
 static const GLubyte colors[] = {
-255, 255, 0, 255,
-0, 255, 255, 255,
-0, 0, 0, 0,
-255, 0, 255, 255
+	255, 255, 255, 255,
+	255, 255, 255, 255,
+	255, 255, 255, 255,
+	255, 255, 255, 255
 };
 
 static const GLfloat textureCoords[] = {
@@ -88,35 +89,41 @@ void Draw(void)
 	grid->Draw(GridType::ZGrid);
 	delete grid;
 	
-	glPushMatrix();
-	glColor3f(255.0f, 0.0f, 0.0f);
-		glBegin(GL_TRIANGLES);
-			glVertex3f(0.0f, 0.0f, 0.0f);
-			glVertex3f(5.0f, 0.0f, 0.0f);
-			glVertex3f(2.5f, 5.0f, 0.0f);
-		glEnd();
-	glPopMatrix();
+	//glPushMatrix();
+	//glColor3f(255.0f, 0.0f, 0.0f);
+	//	glBegin(GL_TRIANGLES);
+	//		glVertex3f(0.0f, 0.0f, 0.0f);
+	//		glVertex3f(5.0f, 0.0f, 0.0f);
+	//		glVertex3f(2.5f, 5.0f, 0.0f);
+	//	glEnd();
+	//glPopMatrix();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	/*
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ALPHA);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	
+	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
 
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
 
-	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
-
 	//glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	*/
+
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
+	
 
 	Console::Instance()->Write("Rotation on X: %f", rotation);
 	Console::Instance()->Write("Zoom on Z: %f", zoom);
@@ -221,7 +228,6 @@ void initGame(int w, int h)
     
     Console::Instance()->Init(0);
     
-	/*
     // Load texture [Start]
     textureLoader = new Texture2D(RESOURCES_FOLDER "blink.png", GL_LINEAR);
     texture.name = RESOURCES_FOLDER "blink.png";
@@ -229,7 +235,6 @@ void initGame(int w, int h)
 	texture.retainCount = 0;
 	texture.retainCount++;
     // Load texture [End]
-    */
 }
 
 void endGame()
