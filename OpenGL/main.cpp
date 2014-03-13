@@ -27,13 +27,17 @@
 
 #define UPDATE_INTERVAL .25
 
+//#define CAMERA_TYPE_3D
+
 Texture2D *textureLoader = NULL;
 Texture texture;
 
-static const GLfloat vertices[] = { 0.0f, 0.0f,
-10.0f, 0.0f,
-0.0f, 10.0f,
-10.0f, 10.0f };
+static const GLfloat vertices[] = {
+0.0f, 0.0f, 10.0f,
+10.0f, 0.0f, 10.0f,
+0.0f, 10.0f, 10.0f,
+10.0f, 10.0f, 10.0f
+};
 
 GLfloat rotation = 0.0f;
 GLfloat zoom = 0.0f;
@@ -71,14 +75,16 @@ void Draw(void)
     //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearColor(0.60f, 0.70f, 0.85f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glLoadIdentity();
-
 	
     // Do Rendering here! [Start]
     glEnable(GL_DEPTH_TEST);
-
+#ifdef CAMERA_TYPE_3D
 	glRotatef(rotation, 1.0f, 1.0f, 0.0f);
-	glTranslatef(0.0f, 0.0f, zoom);
+    glTranslatef(0.0f, 0.0f, zoom);
+#else
+    glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+    glScalef(1.0f + (zoom/2.0f), 1.0f + (zoom/2.0f), 1.0f + (zoom/2.0f));
+#endif
 
 	Grid *grid = new Grid(10, 10, 1, Color4fMake(0.0f, 0.0f, 0.0f, 255.0f));
 	grid->SetColor(Color4fMake(100.0f, 0.0f, 0.0f, 255.0f));
@@ -108,8 +114,11 @@ void Draw(void)
 	glEnableClientState(GL_COLOR_ARRAY);
 	
 	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
-
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
+#ifdef CAMERA_TYPE_3D
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+#else
+    glVertexPointer(2, GL_FLOAT, sizeof(GLfloat) * 3, vertices);
+#endif
 	glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
 
@@ -156,31 +165,39 @@ void HandleResize(int w, int h) {
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
 
-	GLdouble fov, aspect, zNear, zFar, xmin, xmax, ymin, ymax;
-
-	fov = 45.0f; // Field of view.
-	aspect = w / h; // Aspect ratio of screen.
-	zNear = 1;
+	GLdouble zNear, zFar;
+    zNear = 1;
 	zFar = 500;
 
+
+
+#ifdef CAMERA_TYPE_3D
+    GLdouble fov, aspect, xmin, xmax, ymin, ymax;
+    
+    fov = 45.0f; // Field of view.
+	aspect = w / h; // Aspect ratio of screen.
+	   
 	ymax = zNear * tan(fov * M_PI / 360.0f);
 	ymin = -ymax;
 	xmin = ymin * aspect;
 	xmax = ymax * aspect;
-
-	//glFrustum(xmin, xmax, ymin, ymax, zNear, zFar); /* 3D camera type */
-	//glOrtho(-w, w, -h, h, zNear, zFar);
-    //gluOrtho2D(0.0f, (GLdouble)w, 0.0f, (GLdouble)h);
-	//gluOrtho2D(-w / 2, w / 2, -h / 2, h / 2);
-	//gluPerspective(45.0f, w / h, zNear, zFar);
-	__gluPerspective(45.0f, w / h, zNear, zFar);
+    
+    glFrustum(xmin, xmax, ymin, ymax, zNear, zFar); /* 3D camera type */
+#else
+	glOrtho(-w, (GLfloat)w, -h, (GLfloat)h, zNear, zFar);
+#endif
     
 	/*
 	* Switch to GL_MODELVIEW so we can now draw our objects
 	*/
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0.0f, 0.0f, -20.0f);
+#ifdef CAMERA_TYPE_3D
+    glTranslatef(0.0f, 0.0f, -20.0f);
+#else
+	glScalef(20.0f, 20.0f, 20.0f);
+    glTranslatef(0.0f, 0.0f, -1.0f);
+#endif
 }
 
 void HandleKeyPress(unsigned char key, int x, int y)
