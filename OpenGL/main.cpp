@@ -32,30 +32,10 @@
 Texture2D *textureLoader = NULL;
 Texture texture;
 
-static const GLfloat vertices[] = {
-0.0f, 0.0f, 10.0f,
-10.0f, 0.0f, 10.0f,
-0.0f, 10.0f, 10.0f,
-10.0f, 10.0f, 10.0f
-};
+TexturedColoredQuad image;
 
 GLfloat rotation = 0.0f;
 GLfloat zoom = 0.0f;
-
-static const GLubyte colors[] = {
-	255, 255, 255, 255,
-	255, 255, 255, 255,
-	255, 255, 255, 255,
-	255, 255, 255, 255
-};
-
-static const GLfloat textureCoords[] = {
-	0.0f, 0.0f,
-	1.0f, 0.0f,
-	0.0f, 1.0f, 
-	1.0f, 1.0f
-};
-
 
 /* Function Prototypes */
 void HandleResize(int w, int h);
@@ -95,20 +75,6 @@ void Draw(void)
 	grid->Draw(GridType::ZGrid);
 	delete grid;
     
-    TexturedColoredQuad image;
-    image.vertex1.geometryVertex.x = 0.0f;
-    image.vertex1.geometryVertex.y = 0.0f;
-    image.vertex1.geometryVertex.z = 10.0f;
-    image.vertex2.geometryVertex.x = 10.0f;
-    image.vertex2.geometryVertex.y = 0.0f;
-    image.vertex2.geometryVertex.z = 10.0f;
-    image.vertex3.geometryVertex.x = 0.0f;
-    image.vertex3.geometryVertex.y = 10.0f;
-    image.vertex3.geometryVertex.z = 10.0f;
-    image.vertex4.geometryVertex.x = 10.0f;
-    image.vertex4.geometryVertex.y = 10.0f;
-    image.vertex4.geometryVertex.z = 10.0f;
-    
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -121,17 +87,15 @@ void Draw(void)
 	
 	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
 #ifdef CAMERA_TYPE_3D
-	//glVertexPointer(3, GL_FLOAT, 0, vertices);
     glVertexPointer(3, GL_FLOAT, sizeof(TexturedColoredVertex) , &image.vertex1.geometryVertex);
 #else
-    glVertexPointer(2, GL_FLOAT, sizeof(GLfloat) * 3, vertices);
+    glVertexPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex) , &image.vertex1.geometryVertex);
 #endif
-	glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &image.vertex1.textureVertex);
+	glColorPointer(4, GL_FLOAT, sizeof(TexturedColoredVertex), &image.vertex1.vertexColor);
 
 	//glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -261,6 +225,43 @@ void initGame(int w, int h)
 	texture.retainCount++;
     // Load texture [End]
     
+    GLfloat z = 10.0f;
+    
+    // Set image geometry
+    image.vertex1.geometryVertex.x = 0.0f;
+    image.vertex1.geometryVertex.y = 0.0f;
+    image.vertex1.geometryVertex.z = z;
+    
+    image.vertex2.geometryVertex.x = texture.texture->contentSize.width;
+    image.vertex2.geometryVertex.y = 0.0f;
+    image.vertex2.geometryVertex.z = z;
+    
+    image.vertex3.geometryVertex.x = 0.0f;
+    image.vertex3.geometryVertex.y = texture.texture->contentSize.height;
+    image.vertex3.geometryVertex.z = z;
+    
+    image.vertex4.geometryVertex.x = texture.texture->contentSize.width;
+    image.vertex4.geometryVertex.y = texture.texture->contentSize.height;
+    image.vertex4.geometryVertex.z = z;
+    
+    // Set image colors
+    image.vertex1.vertexColor = Color4fWhite;
+    image.vertex2.vertexColor = Color4fWhite;
+    image.vertex3.vertexColor = Color4fWhite;
+    image.vertex4.vertexColor = Color4fWhite;
+    
+    // Set texture coordinates
+    image.vertex1.textureVertex.x = 0.0f;
+    image.vertex1.textureVertex.y = 0.0f;
+    
+    image.vertex2.textureVertex.x = texture.texture->maxS;
+    image.vertex2.textureVertex.y = 0.0f;
+    
+    image.vertex3.textureVertex.x = 0.0f;
+    image.vertex3.textureVertex.y = texture.texture->maxT;
+    
+    image.vertex4.textureVertex.x = texture.texture->maxS;
+    image.vertex4.textureVertex.y = texture.texture->maxT;
 }
 
 void endGame()
