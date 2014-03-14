@@ -125,7 +125,7 @@ typedef struct {
 typedef std::vector<Texture> TextureCollection;
 
 typedef struct {
-	Vector2Df geometryVertex;
+	Vector3Df geometryVertex;
 	Color4f	  vertexColor;
 	Vector2Df textureVertex;
 } TexturedColoredVertex;

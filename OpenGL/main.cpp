@@ -27,7 +27,7 @@
 
 #define UPDATE_INTERVAL .25
 
-//#define CAMERA_TYPE_3D
+#define CAMERA_TYPE_3D
 
 Texture2D *textureLoader = NULL;
 Texture texture;
@@ -94,15 +94,21 @@ void Draw(void)
 	grid->SetColor(Color4fMake(0.0f, 0.0f, 100.0f, 255.0f));
 	grid->Draw(GridType::ZGrid);
 	delete grid;
-	
-	//glPushMatrix();
-	//glColor3f(255.0f, 0.0f, 0.0f);
-	//	glBegin(GL_TRIANGLES);
-	//		glVertex3f(0.0f, 0.0f, 0.0f);
-	//		glVertex3f(5.0f, 0.0f, 0.0f);
-	//		glVertex3f(2.5f, 5.0f, 0.0f);
-	//	glEnd();
-	//glPopMatrix();
+    
+    TexturedColoredQuad image;
+    image.vertex1.geometryVertex.x = 0.0f;
+    image.vertex1.geometryVertex.y = 0.0f;
+    image.vertex1.geometryVertex.z = 10.0f;
+    image.vertex2.geometryVertex.x = 10.0f;
+    image.vertex2.geometryVertex.y = 0.0f;
+    image.vertex2.geometryVertex.z = 10.0f;
+    image.vertex3.geometryVertex.x = 0.0f;
+    image.vertex3.geometryVertex.y = 10.0f;
+    image.vertex3.geometryVertex.z = 10.0f;
+    image.vertex4.geometryVertex.x = 10.0f;
+    image.vertex4.geometryVertex.y = 10.0f;
+    image.vertex4.geometryVertex.z = 10.0f;
+    
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -115,7 +121,8 @@ void Draw(void)
 	
 	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
 #ifdef CAMERA_TYPE_3D
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	//glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glVertexPointer(3, GL_FLOAT, sizeof(TexturedColoredVertex) , &image.vertex1.geometryVertex);
 #else
     glVertexPointer(2, GL_FLOAT, sizeof(GLfloat) * 3, vertices);
 #endif
@@ -253,6 +260,7 @@ void initGame(int w, int h)
 	texture.retainCount = 0;
 	texture.retainCount++;
     // Load texture [End]
+    
 }
 
 void endGame()

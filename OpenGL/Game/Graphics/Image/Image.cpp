@@ -106,10 +106,10 @@ void Image::InitializeImageDetails() {
 	}
     
     // Set up the geometry for the image
-    this->imageDetails->texturedColoredQuad->vertex1.geometryVertex = Vector2DfMake(0.0f, 0.0f);
-    this->imageDetails->texturedColoredQuad->vertex2.geometryVertex = Vector2DfMake(this->imageSize.width, 0.0f);
-    this->imageDetails->texturedColoredQuad->vertex3.geometryVertex = Vector2DfMake(0.0f, this->imageSize.height);
-    this->imageDetails->texturedColoredQuad->vertex4.geometryVertex = Vector2DfMake(this->imageSize.width, this->imageSize.height);
+    this->imageDetails->texturedColoredQuad->vertex1.geometryVertex = Vector3DfMake(0.0f, 0.0f, 0.0f);
+    this->imageDetails->texturedColoredQuad->vertex2.geometryVertex = Vector3DfMake(this->imageSize.width, 0.0f, 0.0f);
+    this->imageDetails->texturedColoredQuad->vertex3.geometryVertex = Vector3DfMake(0.0f, this->imageSize.height, 0.0f);
+    this->imageDetails->texturedColoredQuad->vertex4.geometryVertex = Vector3DfMake(this->imageSize.width, this->imageSize.height, 0.0f);
 
     // Set up the texture coordinates for the image as is.  If a subimage is needed then
     // the getSubImage selector can be used to create a new image with the adjusted
