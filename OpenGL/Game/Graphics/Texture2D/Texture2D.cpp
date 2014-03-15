@@ -12,7 +12,7 @@
 
 #define kMaxTextureSize	1024
 
-bool loadPngImage(const char *name, unsigned int &outWidth, unsigned int &outHeight, bool &outHasAlpha, GLubyte **outData) {
+bool loadPngImage(const char *name, png_uint_32 &outWidth, png_uint_32 &outHeight, bool &outHasAlpha, GLubyte **outData) {
 	png_structp png_ptr;
 	png_infop info_ptr;
 	unsigned int sig_read = 0;
@@ -117,7 +117,8 @@ bool loadPngImage(const char *name, unsigned int &outWidth, unsigned int &outHei
 		fclose(fp);
 		return false;
 	}
-	unsigned int row_bytes = png_get_rowbytes(png_ptr, info_ptr);
+    
+	png_uint_32 row_bytes = (uint)png_get_rowbytes(png_ptr, info_ptr);
 	*outData = (unsigned char*)malloc(row_bytes * outHeight);
 
 	png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
@@ -144,7 +145,7 @@ bool loadPngImage(const char *name, unsigned int &outWidth, unsigned int &outHei
 }
 
 Texture2D::Texture2D(std::string imageName, GLenum filter) {
-	unsigned int			imageWidth, imageHeight;
+	png_uint_32			imageWidth, imageHeight;
 	GLubyte*				imageData;
 	bool					hasAlpha;
 	Size2Df					imageSize;
@@ -183,8 +184,8 @@ Texture2D::Texture2D(std::string imageName, GLenum filter) {
 
 	imageSize = Size2DfMake((GLfloat)imageWidth, (GLfloat)imageHeight);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, imageWidth,
-            imageHeight, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
+    glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, (GLsizei)imageWidth,
+            (GLsizei)imageHeight, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
             imageData);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -196,8 +197,8 @@ Texture2D::Texture2D(std::string imageName, GLenum filter) {
 	pixelFormat = (hasAlpha) ? kTexture2DPixelFormat_RGBA8888 : kTexture2DPixelFormat_RGB565;
 
 	this->contentSize = imageSize;
-	this->width = imageWidth;
-	this->height = imageHeight;
+	this->width = (GLuint)imageWidth;
+	this->height = (GLuint)imageHeight;
 	this->pixelFormat = pixelFormat;
 	this->maxS = this->contentSize.width / (float)imageWidth;
 	this->maxT = this->contentSize.height / (float)imageHeight;

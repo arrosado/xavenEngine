@@ -1,7 +1,7 @@
 #include <Game/Graphics/Grid/Grid.h>
 
 Grid::Grid(int total, int length, int space) {
-	this->m_position = Vector3DfZero;
+	this->m_position = vec3(0.0f, 0.0f, 0.0f);
 	this->m_color = Color4fGray;
 	this->m_total = total;
 	this->m_length = length;
@@ -9,14 +9,14 @@ Grid::Grid(int total, int length, int space) {
 }
 
 Grid::Grid(int total, int length, int space, Color4f color) {
-	this->m_position = Vector3DfZero;
+	this->m_position = vec3(0.0f, 0.0f, 0.0f);
 	this->m_color = color;
 	this->m_total = total;
 	this->m_length = length;
 	this->m_space = space;
 }
 
-Grid::Grid(int total, int length, int space, Color4f color, Vector3Df position) {
+Grid::Grid(int total, int length, int space, Color4f color, vec3 position) {
 	this->m_position = position;
 	this->m_color = color;
 	this->m_total = total;
@@ -24,7 +24,7 @@ Grid::Grid(int total, int length, int space, Color4f color, Vector3Df position) 
 	this->m_space = space;
 }
 
-Grid::Grid(int total, int length, int space, Vector3Df position) {
+Grid::Grid(int total, int length, int space, vec3 position) {
 	this->m_position = position;
 	this->m_color = Color4fGray;
 	this->m_total = total;

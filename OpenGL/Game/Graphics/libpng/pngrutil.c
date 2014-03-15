@@ -225,7 +225,7 @@ png_inflate(png_structp png_ptr, const png_byte *data, png_size_t size,
    png_size_t count = 0;
 
    png_ptr->zstream.next_in = (png_bytep)data; /* const_cast: VALID */
-   png_ptr->zstream.avail_in = size;
+   png_ptr->zstream.avail_in = (uInt)size;
 
    while (1)
    {
@@ -235,10 +235,10 @@ png_inflate(png_structp png_ptr, const png_byte *data, png_size_t size,
        * after every inflate call.
        */
       png_ptr->zstream.next_out = png_ptr->zbuf;
-      png_ptr->zstream.avail_out = png_ptr->zbuf_size;
+      png_ptr->zstream.avail_out = (uInt)png_ptr->zbuf_size;
 
       ret = inflate(&png_ptr->zstream, Z_NO_FLUSH);
-      avail = png_ptr->zbuf_size - png_ptr->zstream.avail_out;
+      avail = (int)png_ptr->zbuf_size - png_ptr->zstream.avail_out;
 
       /* First copy/count any new output - but only if we didn't
        * get an error code.
@@ -247,7 +247,7 @@ png_inflate(png_structp png_ptr, const png_byte *data, png_size_t size,
       {
          if (output != 0 && output_size > count)
          {
-            int copy = output_size - count;
+            long copy = output_size - count;
             if (avail < copy) copy = avail;
             png_memcpy(output + count, png_ptr->zbuf, copy);
          }

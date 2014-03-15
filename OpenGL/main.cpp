@@ -20,6 +20,7 @@
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Graphics/Grid/Grid.h>
 #include <Game/Graphics/Texture2D/Texture2D.h>
+#include <IGameObject.h>
 
 
 #define WIDTH 600
@@ -68,11 +69,11 @@ void Draw(void)
 
 	Grid *grid = new Grid(10, 10, 1, Color4fMake(0.0f, 0.0f, 0.0f, 255.0f));
 	grid->SetColor(Color4fMake(100.0f, 0.0f, 0.0f, 255.0f));
-	grid->Draw(GridType::XGrid);
+	grid->Draw(XGrid);
 	grid->SetColor(Color4fMake(0.0f, 100.0f, 0.0f, 255.0f));
-	grid->Draw(GridType::YGrid);
+	grid->Draw(YGrid);
 	grid->SetColor(Color4fMake(0.0f, 0.0f, 100.0f, 255.0f));
-	grid->Draw(GridType::ZGrid);
+	grid->Draw(ZGrid);
 	delete grid;
     
 	glEnable(GL_BLEND);

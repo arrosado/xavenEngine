@@ -44,7 +44,7 @@ private:
 	 * the calibration in the case that the controller
 	 * sensibility changes.
 	 */
-	Vector3Df m_calibrationCoords;
+	vec3 m_calibrationCoords;
 	
 	/* Keeps the JoyStick sensibility, This sensibility
 	 * is used to calculate the joystick calibration.
@@ -91,7 +91,7 @@ public:
 
 	JoyStickSpeeds Speed;
 	
-	void Initialize(Vector3Df point, unsigned int sensibility) {
+	void Initialize(vec3 point, unsigned int sensibility) {
 		printf("Initializing Joystick....\n");
 		this->m_sensibility = sensibility;
 		this->Calibrate(point.x, point.y, point.z);	
@@ -164,7 +164,7 @@ public:
 		printf("Sensibility Decrease %d\n", this->m_sensibility);
 	};
 	
-	void Update(Vector3Df p) {
+	void Update(vec3 p) {
 		this->Speed.Reset();
 		
 		/* Check if its moving upward. */

@@ -22,9 +22,9 @@ private:
 	 */
 	Color4f m_clearColor;
 	
-	Vector3Df position;
-	Vector3Df direction;
-	Vector3Df rotation;
+	vec3 position;
+	vec3 direction;
+	vec3 rotation;
 
 	Size2Df screen;
 
@@ -83,9 +83,9 @@ Camera::Camera() {
 }
 
 Camera::~Camera() {
-	this->position = Vector3DfZero;
-	this->direction = Vector3DfZero;
-	this->rotation = Vector3DfZero;
+	this->position = vec3(0.0f, 0.0f, 0.0f);
+	this->direction = vec3(0.0f, 0.0f, 0.0f);
+	this->rotation = vec3(0.0f, 0.0f, 0.0f);
 	this->m_clearColor = Color4fZero;
 
 	for(int i = 0; i < AnimationCount; i++)
@@ -294,8 +294,8 @@ void Camera::PointAt(float x, float y, float z, float duration) {
 }
 
 void Camera::Reset() {
-	this->position = Vector3DfZero;
-	this->rotation = Vector3DfZero;
-	this->direction = Vector3DfZero;
+	this->position = vec3(0.0f, 0.0f, 0.0f);
+	this->rotation = vec3(0.0f, 0.0f, 0.0f);
+	this->direction = vec3(0.0f, 0.0f, 0.0f);
 	this->Zoom(INITIAL_Z_POSITION);
 }

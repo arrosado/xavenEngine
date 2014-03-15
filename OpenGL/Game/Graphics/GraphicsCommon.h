@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#define GLM_SWIZZLE
+#include <glm/glm.hpp>
 #ifdef WIN32
 #include <gl/glut.h>
 #define PATH_SEPARATOR "\\"
@@ -37,6 +39,8 @@
 
 /****************** Graphic Types Definitions ****************/
 
+using namespace glm;
+
 class Texture2D;
 
 typedef enum {
@@ -61,20 +65,10 @@ static const Color4f Color4fRed = {1.0f, 0.0f, 0.0f, 1.0f};
 static const Color4f Color4fBlue = {0.0f, 0.0f, 1.0f, 1.0f};
 static const Color4f Color4fGray = {0.5f, 0.5f, 0.5f, 1.0f};
 
-typedef struct {
-	GLfloat x;
-	GLfloat y;
-} Vector2Df;
 
 typedef struct {
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
-} Vector3Df;
-
-typedef struct {
-	Vector2Df position;
-	Vector2Df direction;
+	vec2 position;
+	vec2 direction;
 	Color4f color;
 	Color4f deltaColor;
 	GLfloat size;
@@ -93,41 +87,31 @@ typedef struct {
 } Size3Df;
 
 typedef struct {
-	Vector2Df origin;
-	Size2Df size;
-} Rect2Df;
-
-typedef struct { 
-    Vector3Df origin;
-    Size3Df size;
-} Rect3Df;
-
-typedef struct {
 	Texture2D* texture;
 	GLuint retainCount;
 	std::string name;
 } Texture;
 
 typedef struct { 
-	Vector2Df tl;
-	Vector2Df tr;
-	Vector2Df bl;
-	Vector2Df br;
+	vec2 tl;
+	vec2 tr;
+	vec2 bl;
+	vec2 br;
 } Quad2Df;
 
 typedef struct {
-	Vector3Df tl;
-	Vector3Df tr;
-	Vector3Df bl;
-	Vector3Df br;
+	vec3 tl;
+	vec3 tr;
+	vec3 bl;
+	vec3 br;
 } Quad3Df;
 
 typedef std::vector<Texture> TextureCollection;
 
 typedef struct {
-	Vector3Df geometryVertex;
-	Color4f	  vertexColor;
-	Vector2Df textureVertex;
+	vec3 geometryVertex;
+	Color4f	vertexColor;
+	vec2 textureVertex;
 } TexturedColoredVertex;
 
 typedef struct {
@@ -154,198 +138,6 @@ static inline Size3Df Size3DfMake(GLfloat w, GLfloat h, GLfloat d) { Size3Df s =
 static const Color4f Color4fZero = {1.0f, 1.0f, 1.0f, 1.0f};
 
 static inline Color4f Color4fMake(GLfloat r, GLfloat g, GLfloat b, GLfloat a) { Color4f c = {r, g, b, a}; return c; }
-
-static const Vector2Df Vector2DfZero = {0.0f, 0.0f};
-
-static inline Vector2Df Vector2DfMake(GLfloat x, GLfloat y) { Vector2Df v = {x, y}; return v; }
-
-static const Vector3Df Vector3DfZero = {0.0f, 0.0f, 0.0f};
-
-static inline Vector3Df Vector3DfMake(GLfloat x, GLfloat y, GLfloat z) { Vector3Df v = {x, y, z}; return v; }
-
-static const Rect2Df Rect2DfZero = {Vector2DfZero, Size2DfZero};
-
-static inline Rect2Df Rect2DfMake(GLfloat x, GLfloat y, GLfloat w, GLfloat h) { Rect2Df r = {Vector2DfMake(x, y), Size2DfMake(w, h)}; return r; }
-
-static const Rect3Df Rect3DfZero = {Vector3DfZero, Size3DfZero};
-
-static inline Rect3Df Rect3DfMake(GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLfloat h, GLfloat d) { Rect3Df r = { Vector3DfMake(x, y, z), Size3DfMake(w, h, d)}; return r; }
-
-
-static inline Vector2Df Vector2DfMultiply(Vector2Df v, GLfloat s) { Vector2Df vect = {v.x * s, v.y * s}; return vect; }
-
-static inline Vector2Df Vector2DfAdd(Vector2Df v1, Vector2Df v2) { Vector2Df vect = {v1.x + v2.x, v1.y + v2.y}; return vect; }
-
-static inline Vector2Df Vector2DfSub(Vector2Df v1, Vector2Df v2) { Vector2Df v = {v1.x - v2.x, v1.y - v2.y}; return v; }
-
-static inline GLfloat Vector2DfDot(Vector2Df v1, Vector2Df v2) { return (GLfloat) v1.x * v2.x + v1.y * v2.y; }
-
-static inline GLfloat Vector2DfLength(Vector2Df v) { return (GLfloat) sqrtf(Vector2DfDot(v, v)); }
-
-static inline Vector2Df Vector2DfNormalize(Vector2Df v) { return Vector2DfMultiply(v, 1.0f/Vector2DfLength(v)); }
-
-typedef struct Matrix4f {
-private:
-    GLfloat m[16];
-    
-public:
-    void LoadIdentity()
-    {
-        m[0] = 1.0f; m[4] = 0.0f; m[8]  = 0.0f; m[12] = 0.0f;
-        m[1] = 0.0f; m[5] = 1.0f; m[9]  = 0.0f; m[13] = 0.0f;
-        m[2] = 0.0f; m[6] = 0.0f; m[10] = 1.0f; m[14] = 0.0f;
-        m[3] = 0.0f; m[7] = 0.0f; m[11] = 0.0f; m[15] = 1.0f;
-    }
-    
-    void Translate(Vector3Df point)
-    {
-        m[0] = 1.0f; m[4] = 0.0f; m[8]  = 0.0f; m[12] = point.x;
-        m[1] = 0.0f; m[5] = 1.0f; m[9]  = 0.0f; m[13] = point.y;
-        m[2] = 0.0f; m[6] = 0.0f; m[10] = 1.0f; m[14] = point.z;
-        m[3] = 0.0f; m[7] = 0.0f; m[11] = 0.0f; m[15] = 1.0f;
-    }
-    
-    void Scale(Size2Df scale)
-    {
-        Scale(Size3DfMake(scale.width, scale.height, 0.0f));
-    }
-    
-    void Scale(Size3Df scale)
-    {
-        GLfloat w = scale.width;
-        GLfloat h = scale.height;
-        GLfloat d = scale.depth;
-        
-        m[0] = w;    m[4] = 0.0f; m[8]  = 0.0f; m[12] = 0.0f;
-        m[1] = 0.0f; m[5] = h;    m[9]  = 0.0f; m[13] = 0.0f;
-        m[2] = 0.0f; m[6] = 0.0f; m[10] = d;    m[14] = 0.0f;
-        m[3] = 0.0f; m[7] = 0.0f; m[11] = 0.0f; m[15] = 1.0f;
-    }
-    
-    void Rotate(GLfloat angle, Vector3Df rotation)
-    {
-        // Turns the degrees passed in to radians for the calculations
-        GLfloat radians = DEGREES_TO_RADIANS(angle);
-        
-        // Calculate the sin and cos for the rotation
-        GLfloat c = cosf(radians);
-        GLfloat s = sinf(radians);
-        GLfloat x = rotation.x;
-        GLfloat y = rotation.y;
-        GLfloat z = rotation.z;
-        
-        m[0] = pow(x, 2) * (1-c) + c; m[4] = x*y*(1-c)-z*s;     m[8]  = x*z*(1-c)+y*s;      m[12] = 0.0f;
-        m[1] = x*y*(1-c)+z*s;         m[5] = pow(y, 2)*(1-c)+c; m[9]  = y*z*(1-c)-x*s;      m[13] = 0.0f;
-        m[2] = x*z*(1-c)-y*s;         m[6] = y*z*(1-c)+x*s;     m[10] = pow(z, 2)*(1-c)+c;  m[14] = 0.0f;
-        m[3] = 0.0f;                  m[7] = 0.0f;              m[11] = 0.0f;               m[15] = 1.0f;
-    }
-    
-    static Matrix4f Multiply(Matrix4f m1, Matrix4f m2)
-    {
-        Matrix4f r;
-        
-        r.m[0]  = m1.m[0] * m2.m[0] + m1.m[1] * m2.m[4] + m1.m[2] * m2.m[8] + m1.m[3] * m2.m[12];
-        r.m[1]  = m1.m[4] * m2.m[0] + m1.m[5] * m2.m[4] + m1.m[6] * m2.m[8] + m1.m[7] * m2.m[12];
-        r.m[2]  = m1.m[8] * m2.m[0] + m1.m[9] * m2.m[4] + m1.m[10]* m2.m[8] + m1.m[11]* m2.m[12];
-        r.m[3]  = m1.m[12]* m2.m[0] + m1.m[13]* m2.m[4] + m1.m[14]* m2.m[8] + m1.m[15]* m2.m[12];
-			    
-        r.m[4]  = m1.m[0] * m2.m[1] + m1.m[1] * m2.m[5] + m1.m[2] * m2.m[9] + m1.m[3] * m2.m[13];
-        r.m[5]  = m1.m[4] * m2.m[1] + m1.m[5] * m2.m[5] + m1.m[6] * m2.m[9] + m1.m[7] * m2.m[13];
-        r.m[6]  = m1.m[8] * m2.m[1] + m1.m[9] * m2.m[5] + m1.m[10]* m2.m[9] + m1.m[11]* m2.m[13];
-        r.m[7]  = m1.m[12]* m2.m[1] + m1.m[13]* m2.m[5] + m1.m[14]* m2.m[9] + m1.m[15]* m2.m[13];
-
-        r.m[8]  = m1.m[0] * m2.m[2] + m1.m[1] * m2.m[6] + m1.m[2] * m2.m[10] + m1.m[3] * m2.m[14];
-        r.m[9]  = m1.m[4] * m2.m[2] + m1.m[5] * m2.m[6] + m1.m[6] * m2.m[10] + m1.m[7] * m2.m[14];
-        r.m[10] = m1.m[8] * m2.m[2] + m1.m[9] * m2.m[6] + m1.m[10]* m2.m[10] + m1.m[11]* m2.m[14];
-        r.m[11] = m1.m[12]* m2.m[2] + m1.m[13]* m2.m[6] + m1.m[14]* m2.m[10] + m1.m[15]* m2.m[14];
-
-        r.m[12] = m1.m[0] * m2.m[3] + m1.m[1] * m2.m[7] + m1.m[2] * m2.m[11] + m1.m[3] * m2.m[15];
-        r.m[13] = m1.m[4] * m2.m[3] + m1.m[5] * m2.m[7] + m1.m[6] * m2.m[11] + m1.m[7] * m2.m[15];
-        r.m[14] = m1.m[8] * m2.m[3] + m1.m[9] * m2.m[7] + m1.m[10]* m2.m[11] + m1.m[11]* m2.m[15];
-        r.m[15] = m1.m[12]* m2.m[3] + m1.m[13]* m2.m[7] + m1.m[14]* m2.m[11] + m1.m[15]* m2.m[15];
-        
-        
-        return r;
-    }
-    
-} Matrix4f;
-
-// Loads the supplied matrix with the identity matrix
-static inline void loadIdentityMatrix(float aMatrix[]) {
-    aMatrix[0] = 1.0f; aMatrix[1] = 0.0f; aMatrix[2] = 0.0f;
-    aMatrix[3] = 0.0f; aMatrix[4] = 1.0f; aMatrix[5] = 0.0f;
-    aMatrix[6] = 0.0f; aMatrix[7] = 0.0f; aMatrix[8] = 1.0f;
-}
-
-// Applies a rotation transformation to the supplied matrix.  A translation is also applied
-// which allows the rotation to take place around a specific point.
-static inline void rotateMatrix(float aMatrix[], Vector3Df aRotationPoint, float aRotation) {
-    // Translate into the image to the point around which rotation will occur
-    aMatrix[6] = aRotationPoint.x * aMatrix[0] + aRotationPoint.y * aMatrix[3] + aMatrix[6];
-    aMatrix[7] = aRotationPoint.x * aMatrix[1] + aRotationPoint.y * aMatrix[4] + aMatrix[7];
-    aMatrix[8] = aRotationPoint.x * aMatrix[2] + aRotationPoint.y * aMatrix[5] + aMatrix[8];
-    
-    // Turns the degrees passed in to radians for the calculations
-    float radians = DEGREES_TO_RADIANS(aRotation);
-    
-    // Calculate the sin and cos for the rotation
-	float cosTheta = cosf(radians);
-	float sinTheta = sinf(radians);
-    
-    // Take a copy of the matrix as we will need this during the calculation
-	float m0 = aMatrix[0];
-	float m1 = aMatrix[1];
-	float m2 = aMatrix[2];
-	float m3 = aMatrix[3];
-	float m4 = aMatrix[4];
-	float m5 = aMatrix[5];
-    
-    // Perform the rotation transformation on the images matrix
-	aMatrix[0] = cosTheta * m0 + sinTheta * m3;
-	aMatrix[1] = cosTheta * m1 + sinTheta * m4;
-	aMatrix[2] = cosTheta * m2 + sinTheta * m5;
-	aMatrix[3] = -sinTheta * m0 + cosTheta * m3;
-	aMatrix[4] = -sinTheta * m1 + cosTheta * m4;
-	aMatrix[5] = -sinTheta * m2 + cosTheta * m5;   
-    
-    // Now reverse the translation we did to the point of rotation
-    aMatrix[6] = -aRotationPoint.x * aMatrix[0] + -aRotationPoint.y * aMatrix[3] + aMatrix[6];
-    aMatrix[7] = -aRotationPoint.x * aMatrix[1] + -aRotationPoint.y * aMatrix[4] + aMatrix[7];
-    aMatrix[8] = -aRotationPoint.x * aMatrix[2] + -aRotationPoint.y * aMatrix[5] + aMatrix[8];
-}
-
-// Applies the scale transformation to the matrix using the scale information provided in |aScale|
-static inline void scaleMatrix(float aMatrix[], Size2Df aScale) {
-    // Perform the scale transformation on the images matrix
-    aMatrix[0] *= aScale.width;
-    aMatrix[1] *= aScale.width;
-    aMatrix[2] *= aScale.width;
-    aMatrix[3] *= aScale.height;
-    aMatrix[4] *= aScale.height;
-    aMatrix[5] *= aScale.height;
-}
-
-// Applies the translation transformation to the matrix using |aPoint|
-static inline void translateMatrix(float aMatrix[], Vector3Df aPoint) {
-    aMatrix[6] = aPoint.x * aMatrix[0] + aPoint.y * aMatrix[3] + aMatrix[6];
-    aMatrix[7] = aPoint.x * aMatrix[1] + aPoint.y * aMatrix[4] + aMatrix[7];
-    aMatrix[8] = aPoint.x * aMatrix[2] + aPoint.y * aMatrix[5] + aMatrix[8];
-}
-
-// Transforms the vertices in |aQuad| using |aMatrix| with the results being loaded into |aTransformedQuad|
-static inline void transformMatrix(float aMatrix[], TexturedColoredQuad *aQuad, TexturedColoredQuad *aTransformedQuad) {
-	aTransformedQuad->vertex1.geometryVertex.x = aQuad->vertex1.geometryVertex.x * aMatrix[0] + aQuad->vertex1.geometryVertex.y * aMatrix[3] + aMatrix[6];
-	aTransformedQuad->vertex1.geometryVertex.y = aQuad->vertex1.geometryVertex.x * aMatrix[1] + aQuad->vertex1.geometryVertex.y * aMatrix[4] + aMatrix[7];
-    
-	aTransformedQuad->vertex2.geometryVertex.x = aQuad->vertex2.geometryVertex.x * aMatrix[0] + aQuad->vertex2.geometryVertex.y * aMatrix[3] + aMatrix[6];
-	aTransformedQuad->vertex2.geometryVertex.y = aQuad->vertex2.geometryVertex.x * aMatrix[1] + aQuad->vertex2.geometryVertex.y * aMatrix[4] + aMatrix[7];
-	
-	aTransformedQuad->vertex3.geometryVertex.x = aQuad->vertex3.geometryVertex.x * aMatrix[0] + aQuad->vertex3.geometryVertex.y * aMatrix[3] + aMatrix[6];
-	aTransformedQuad->vertex3.geometryVertex.y = aQuad->vertex3.geometryVertex.x * aMatrix[1] + aQuad->vertex3.geometryVertex.y * aMatrix[4] + aMatrix[7];
-	
-	aTransformedQuad->vertex4.geometryVertex.x = aQuad->vertex4.geometryVertex.x * aMatrix[0] + aQuad->vertex4.geometryVertex.y * aMatrix[3] + aMatrix[6];
-	aTransformedQuad->vertex4.geometryVertex.y = aQuad->vertex4.geometryVertex.x * aMatrix[1] + aQuad->vertex4.geometryVertex.y * aMatrix[4] + aMatrix[7];
-}
 
 /* GLUT functions */
 static inline void __gluMakeIdentityf(GLfloat m[16])

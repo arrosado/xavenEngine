@@ -13,7 +13,7 @@ void InputManager::Init(int argc, ...) {
 
 	va_end(l);
 
-	this->m_joystick->Initialize(Vector3DfMake(width/2, height/2, 0.0f), 100);
+	this->m_joystick->Initialize(vec3(width/2, height/2, 0.0f), 100);
 }
 
 void InputManager::HandleEvents() { 
@@ -21,7 +21,7 @@ void InputManager::HandleEvents() {
 } 
 
 void InputManager::Update(double delta) { 
-	this->m_joystick->Update(Vector3DfMake(this->pointerX, this->pointerY, 0.0f));
+	this->m_joystick->Update(vec3(this->pointerX, this->pointerY, 0.0f));
 }
 
 void InputManager::Draw() { }
