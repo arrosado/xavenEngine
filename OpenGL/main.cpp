@@ -21,6 +21,7 @@
 #include <Game/Graphics/Grid/Grid.h>
 #include <Game/Graphics/Texture2D/Texture2D.h>
 #include <IGameObject.h>
+#include <Game/Input/InputManager.h>
 
 
 #define WIDTH 800
@@ -29,11 +30,6 @@
 #define UPDATE_INTERVAL .25
 
 #define CAMERA_TYPE_3D
-
-Texture2D *textureLoader = NULL;
-Texture texture;
-
-Image image;
 
 IGameObject * player;
 
@@ -60,8 +56,9 @@ void Draw(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
     // Do Rendering here! [Start]
-    glEnable(GL_DEPTH_TEST);
+
 #ifdef CAMERA_TYPE_3D
+    glEnable(GL_DEPTH_TEST);
 	glRotatef(rotation, 1.0f, 1.0f, 0.0f);
     glTranslatef(0.0f, 0.0f, zoom);
 #else
@@ -80,47 +77,81 @@ void Draw(void)
     
     player->Draw();
     
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ALPHA);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	
-	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
-#ifdef CAMERA_TYPE_3D
-    glVertexPointer(3, GL_FLOAT, sizeof(Vertex) , &image.vertex1.geometry);
-#else
-    glVertexPointer(2, GL_FLOAT, sizeof(Vertex) , &image.vertex1.geometry);
-#endif
-	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &image.vertex1.texture);
-	glColorPointer(4, GL_FLOAT, sizeof(Vertex), &image.vertex1.color);
-
-	//glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-
-	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
-    
-    
-	
-
 	Console::Instance()->Write("Rotation on X: %f", rotation);
 	Console::Instance()->Write("Zoom on Z: %f", zoom);
+    Console::Instance()->Write("Player is at x:%f y:%f z:%f", player->position.x, player->position.y, player->position.z);
 	Console::Instance()->Draw();
 
+#ifdef CAMERA_TYPE_3D
+    glDisable(GL_DEPTH_TEST);
+#endif
     
     glFlush();
-    glDisable(GL_DEPTH_TEST);
     
     glutSwapBuffers();
+}
+
+
+void DoStuff() {
+    InputManager *i = InputManager::Instance();
+    
+    
+    bool movePlayer = i->GetKeyState('m') && i->GetKeyState('p');
+    bool rotatePlayer = i->GetKeyState('r') && i->GetKeyState('p');
+    bool scalePlayer = i->GetKeyState('s') && i->GetKeyState('p');
+    
+    if (movePlayer)
+    {
+        player->position.x += i->GetKeyState('d') ? 1.0f : (i->GetKeyState('e') ? -1.0f : 0.0f);
+        player->position.y += i->GetKeyState('f') ? 1.0f : (i->GetKeyState('g') ? -1.0f : 0.0f);
+    }
+    
+    if (rotatePlayer)
+    {
+        player->rotation.z += i->GetKeyState('d') ? 1.0f : (i->GetKeyState('e') ? -1.0f : 0.0f);
+        player->rotation.y += i->GetKeyState('f') ? 1.0f : (i->GetKeyState('g') ? -1.0f : 0.0f);
+    }
+    
+    if (scalePlayer)
+    {
+        player->scale.x += i->GetKeyState('d') ? 0.1f : (i->GetKeyState('e') ? -0.1f : 0.0f);
+        player->scale.y += i->GetKeyState('f') ? 0.1f : (i->GetKeyState('g') ? -0.1f : 0.0f);
+    }
+    
+    bool rotateCamera = i->GetKeyState('r') && i->GetKeyState('c');
+    
+    if (rotateCamera)
+    {
+        bool clockwise = i->GetKeyState('d');
+        
+        rotation = rotation + ((clockwise) ? -0.1f : 0.1f);
+    }
+    
+    bool zooming = i->GetKeyState('z') && i->GetKeyState('c');
+    
+    if (zooming)
+    {
+        bool in = i->GetKeyState('i');
+        bool out = i->GetKeyState('o');
+        
+        if (in)
+        {
+            zoom++;
+        }
+        else if (out)
+        {
+            zoom--;
+        }
+    }
+    
+    bool reset = i->GetKeyState('x');
+    
+    if (reset)
+    {
+        glLoadIdentity();
+        rotation =
+        zoom = 0.0f;
+    }
 }
 
 void Update(int value) {
@@ -130,6 +161,11 @@ void Update(int value) {
     
     Console::Instance()->HandleEvents();
     Console::Instance()->Update((delta - lastFrameTime));
+    
+    InputManager::Instance()->HandleEvents();
+    InputManager::Instance()->Update((delta - lastFrameTime));
+    
+    DoStuff();
 
     lastFrameTime = delta;
     
@@ -145,14 +181,14 @@ void HandleResize(int w, int h) {
 
 	GLdouble zNear, zFar;
     zNear = 1;
-	zFar = 500;
+	zFar = 1500;
 
 
 
 #ifdef CAMERA_TYPE_3D
     GLdouble fov, aspect, xmin, xmax, ymin, ymax;
     
-    fov = 45.0f; // Field of view.
+    fov = 65.0f; // Field of view.
 	aspect = w / h; // Aspect ratio of screen.
 	   
 	ymax = zNear * tan(fov * M_PI / 360.0f);
@@ -180,37 +216,27 @@ void HandleResize(int w, int h) {
 
 void HandleKeyPress(unsigned char key, int x, int y)
 {
+    InputManager::Instance()->SetKeyState(key, true);
     switch (key)
     {
         case 27 :
         case 'q':
             exit(0);
             break;
-		case 'r':
-			rotation += 0.1f;
-			break;
-		case 'e':
-			rotation -= 0.1f;
-			break;
-		case 'i':
-			zoom += 0.1f;
-			break;
-		case 'o':
-			zoom -= 0.1f;
-			break;
-		case 'x':
-			glLoadIdentity();
-			rotation = 0.0f;
-			zoom = 0.0f;
-			break;
     }
 }
 
-void HandleKeyRelease(unsigned char key, int x, int y) { }
+void HandleKeyRelease(unsigned char key, int x, int y) {
+    InputManager::Instance()->SetKeyState(key, false);
+}
 
-void HandleSpecialKeyPress(int key, int x, int y) { }
+void HandleSpecialKeyPress(int key, int x, int y) {
+    InputManager::Instance()->SetKeyState(key, true);
+}
 
-void HandleSpecialKeyRelease(int key, int x, int y) { }
+void HandleSpecialKeyRelease(int key, int x, int y) {
+    InputManager::Instance()->SetKeyState(key, false);
+}
 
 void HandleMouse(int button, int state, int x, int y) { }
 
@@ -224,61 +250,21 @@ void initGame(int w, int h)
     
     Console::Instance()->Init(0);
     
-    IGameObjectComponent * sprite = new SpriteRendererComponent("run.png");
+    InputManager::Instance()->Init(2, w, h);
     
     player = new GameObject();
+    
+    IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png");
+    
     player->AddComponent(sprite);
-    
-    // Load texture [Start]
-    textureLoader = new Texture2D(RESOURCES_FOLDER "blink.png", GL_LINEAR);
-    texture.name = RESOURCES_FOLDER "blink.png";
-	texture.data = textureLoader;
-	texture.retainCount = 0;
-	texture.retainCount++;
-    // Load texture [End]
-    
-    GLfloat z = 10.0f;
-    
-    // Set image geometry
-    image.vertex1.geometry.x = 0.0f;
-    image.vertex1.geometry.y = 0.0f;
-    image.vertex1.geometry.z = z;
-    
-    image.vertex2.geometry.x = texture.data->contentSize.width;
-    image.vertex2.geometry.y = 0.0f;
-    image.vertex2.geometry.z = z;
-    
-    image.vertex3.geometry.x = 0.0f;
-    image.vertex3.geometry.y = texture.data->contentSize.height;
-    image.vertex3.geometry.z = z;
-    
-    image.vertex4.geometry.x = texture.data->contentSize.width;
-    image.vertex4.geometry.y = texture.data->contentSize.height;
-    image.vertex4.geometry.z = z;
-    
-    // Set image colors
-    image.vertex1.color = Color4fWhite;
-    image.vertex2.color = Color4fWhite;
-    image.vertex3.color = Color4fWhite;
-    image.vertex4.color = Color4fWhite;
-    
-    // Set texture coordinates
-    image.vertex1.texture.x = 0.0f;
-    image.vertex1.texture.y = 0.0f;
-    
-    image.vertex2.texture.x = texture.data->maxS;
-    image.vertex2.texture.y = 0.0f;
-    
-    image.vertex3.texture.x = 0.0f;
-    image.vertex3.texture.y = texture.data->maxT;
-    
-    image.vertex4.texture.x = texture.data->maxS;
-    image.vertex4.texture.y = texture.data->maxT;
-    
 }
 
 void endGame()
 {
+    InputManager::Instance()->Quit();
+    InputManager::Instance()->Cleanup();
+    delete InputManager::Instance();
+    
     Console::Instance()->Quit();
     Console::Instance()->Cleanup();
     delete Console::Instance();
