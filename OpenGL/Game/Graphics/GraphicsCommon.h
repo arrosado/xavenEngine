@@ -65,16 +65,6 @@ static const Color4f Color4fRed = {1.0f, 0.0f, 0.0f, 1.0f};
 static const Color4f Color4fBlue = {0.0f, 0.0f, 1.0f, 1.0f};
 static const Color4f Color4fGray = {0.5f, 0.5f, 0.5f, 1.0f};
 
-
-typedef struct {
-	vec2 position;
-	vec2 direction;
-	Color4f color;
-	Color4f deltaColor;
-	GLfloat size;
-	GLfloat timeToLive;
-} Particle;
-
 typedef struct {
 	GLfloat width;
 	GLfloat height;
@@ -87,45 +77,26 @@ typedef struct {
 } Size3Df;
 
 typedef struct {
-	Texture2D* texture;
+	Texture2D* data;
 	GLuint retainCount;
 	std::string name;
 } Texture;
 
-typedef struct { 
-	vec2 tl;
-	vec2 tr;
-	vec2 bl;
-	vec2 br;
-} Quad2Df;
-
-typedef struct {
-	vec3 tl;
-	vec3 tr;
-	vec3 bl;
-	vec3 br;
-} Quad3Df;
-
 typedef std::vector<Texture> TextureCollection;
 
 typedef struct {
-	vec3 geometryVertex;
-	Color4f	vertexColor;
-	vec2 textureVertex;
-} TexturedColoredVertex;
+	vec3 geometry;
+	Color4f	color;
+	vec2 texture;
+} Vertex;
 
 typedef struct {
-	TexturedColoredVertex vertex1;
-	TexturedColoredVertex vertex2;
-	TexturedColoredVertex vertex3;
-	TexturedColoredVertex vertex4;
-} TexturedColoredQuad;
-
-typedef struct {
-	TexturedColoredQuad *texturedColoredQuad;
-	TexturedColoredQuad *texturedColoredQuadIVA;
-	GLuint textureName;
-} ImageDetails;
+	Vertex vertex1;
+	Vertex vertex2;
+	Vertex vertex3;
+	Vertex vertex4;
+    Texture texture;
+} Image;
 
 static const Size2Df Size2DfZero = {1.0f, 1.0f};
 

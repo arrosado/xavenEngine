@@ -23,7 +23,7 @@
 #include <IGameObject.h>
 
 
-#define WIDTH 600
+#define WIDTH 800
 #define HEIGHT 600
 
 #define UPDATE_INTERVAL .25
@@ -33,7 +33,9 @@
 Texture2D *textureLoader = NULL;
 Texture texture;
 
-TexturedColoredQuad image;
+Image image;
+
+IGameObject * player;
 
 GLfloat rotation = 0.0f;
 GLfloat zoom = 0.0f;
@@ -68,13 +70,15 @@ void Draw(void)
 #endif
 
 	Grid *grid = new Grid(10, 10, 1, Color4fMake(0.0f, 0.0f, 0.0f, 255.0f));
-	grid->SetColor(Color4fMake(100.0f, 0.0f, 0.0f, 255.0f));
+	grid->SetColor(Color4fRed);
 	grid->Draw(XGrid);
-	grid->SetColor(Color4fMake(0.0f, 100.0f, 0.0f, 255.0f));
+	grid->SetColor(Color4fGreen);
 	grid->Draw(YGrid);
-	grid->SetColor(Color4fMake(0.0f, 0.0f, 100.0f, 255.0f));
+	grid->SetColor(Color4fBlue);
 	grid->Draw(ZGrid);
 	delete grid;
+    
+    player->Draw();
     
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -88,12 +92,12 @@ void Draw(void)
 	
 	glBindTexture(GL_TEXTURE_2D, textureLoader->name);
 #ifdef CAMERA_TYPE_3D
-    glVertexPointer(3, GL_FLOAT, sizeof(TexturedColoredVertex) , &image.vertex1.geometryVertex);
+    glVertexPointer(3, GL_FLOAT, sizeof(Vertex) , &image.vertex1.geometry);
 #else
-    glVertexPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex) , &image.vertex1.geometryVertex);
+    glVertexPointer(2, GL_FLOAT, sizeof(Vertex) , &image.vertex1.geometry);
 #endif
-	glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedColoredVertex), &image.vertex1.textureVertex);
-	glColorPointer(4, GL_FLOAT, sizeof(TexturedColoredVertex), &image.vertex1.vertexColor);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &image.vertex1.texture);
+	glColorPointer(4, GL_FLOAT, sizeof(Vertex), &image.vertex1.color);
 
 	//glDrawElements(GL_TRIANGLES, vertexCounter, GL_UNSIGNED_SHORT, ivaIndices);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -104,6 +108,8 @@ void Draw(void)
 
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
+    
+    
 	
 
 	Console::Instance()->Write("Rotation on X: %f", rotation);
@@ -218,10 +224,15 @@ void initGame(int w, int h)
     
     Console::Instance()->Init(0);
     
+    IGameObjectComponent * sprite = new SpriteRendererComponent("run.png");
+    
+    player = new GameObject();
+    player->AddComponent(sprite);
+    
     // Load texture [Start]
     textureLoader = new Texture2D(RESOURCES_FOLDER "blink.png", GL_LINEAR);
     texture.name = RESOURCES_FOLDER "blink.png";
-	texture.texture = textureLoader;
+	texture.data = textureLoader;
 	texture.retainCount = 0;
 	texture.retainCount++;
     // Load texture [End]
@@ -229,40 +240,41 @@ void initGame(int w, int h)
     GLfloat z = 10.0f;
     
     // Set image geometry
-    image.vertex1.geometryVertex.x = 0.0f;
-    image.vertex1.geometryVertex.y = 0.0f;
-    image.vertex1.geometryVertex.z = z;
+    image.vertex1.geometry.x = 0.0f;
+    image.vertex1.geometry.y = 0.0f;
+    image.vertex1.geometry.z = z;
     
-    image.vertex2.geometryVertex.x = texture.texture->contentSize.width;
-    image.vertex2.geometryVertex.y = 0.0f;
-    image.vertex2.geometryVertex.z = z;
+    image.vertex2.geometry.x = texture.data->contentSize.width;
+    image.vertex2.geometry.y = 0.0f;
+    image.vertex2.geometry.z = z;
     
-    image.vertex3.geometryVertex.x = 0.0f;
-    image.vertex3.geometryVertex.y = texture.texture->contentSize.height;
-    image.vertex3.geometryVertex.z = z;
+    image.vertex3.geometry.x = 0.0f;
+    image.vertex3.geometry.y = texture.data->contentSize.height;
+    image.vertex3.geometry.z = z;
     
-    image.vertex4.geometryVertex.x = texture.texture->contentSize.width;
-    image.vertex4.geometryVertex.y = texture.texture->contentSize.height;
-    image.vertex4.geometryVertex.z = z;
+    image.vertex4.geometry.x = texture.data->contentSize.width;
+    image.vertex4.geometry.y = texture.data->contentSize.height;
+    image.vertex4.geometry.z = z;
     
     // Set image colors
-    image.vertex1.vertexColor = Color4fWhite;
-    image.vertex2.vertexColor = Color4fWhite;
-    image.vertex3.vertexColor = Color4fWhite;
-    image.vertex4.vertexColor = Color4fWhite;
+    image.vertex1.color = Color4fWhite;
+    image.vertex2.color = Color4fWhite;
+    image.vertex3.color = Color4fWhite;
+    image.vertex4.color = Color4fWhite;
     
     // Set texture coordinates
-    image.vertex1.textureVertex.x = 0.0f;
-    image.vertex1.textureVertex.y = 0.0f;
+    image.vertex1.texture.x = 0.0f;
+    image.vertex1.texture.y = 0.0f;
     
-    image.vertex2.textureVertex.x = texture.texture->maxS;
-    image.vertex2.textureVertex.y = 0.0f;
+    image.vertex2.texture.x = texture.data->maxS;
+    image.vertex2.texture.y = 0.0f;
     
-    image.vertex3.textureVertex.x = 0.0f;
-    image.vertex3.textureVertex.y = texture.texture->maxT;
+    image.vertex3.texture.x = 0.0f;
+    image.vertex3.texture.y = texture.data->maxT;
     
-    image.vertex4.textureVertex.x = texture.texture->maxS;
-    image.vertex4.textureVertex.y = texture.texture->maxT;
+    image.vertex4.texture.x = texture.data->maxS;
+    image.vertex4.texture.y = texture.data->maxT;
+    
 }
 
 void endGame()
