@@ -26,6 +26,7 @@ public:
     vec3 position;
     vec3 rotation;
     vec3 scale = vec3(1.0f, 1.0f, 1.0f);
+    bool centered;
     
     virtual void AddComponent(IGameObjectComponent * component) = 0;
     virtual void Draw() = 0;
@@ -52,15 +53,38 @@ public:
         image.texture.data = new Texture2D(RESOURCES_FOLDER + imageName, GL_LINEAR);
         image.texture.name = imageName;
         image.texture.retainCount++;
+        image.texture.offset = vec2(0.0f, 0.0f);
+        image.size = image.texture.data->contentSize;
+        image.texture.size.width = image.texture.data->maxS;
+        image.texture.size.height = image.texture.data->maxT;
+    }
+    
+    SpriteRendererComponent(IGameObject *gameObject, const string imageName, Rect2Df subImageRect) : IGameObjectComponent(gameObject)
+    {
+        image.texture.data = new Texture2D(RESOURCES_FOLDER + imageName, GL_LINEAR);
+        image.texture.name = imageName;
+        image.texture.retainCount++;
+        image.texture.offset = vec2(0.0f, 0.0f);
+        image.size = image.texture.data->contentSize;
+        image.texture.size.width = image.texture.data->maxS;
+        image.texture.size.height = image.texture.data->maxT;
+        
+        image.size = subImageRect.size;
+        
+        image.texture.offset = vec2(image.texture.data->ratio.width * subImageRect.origin.x,
+                                    image.texture.data->ratio.height * subImageRect.origin.y);
+        
+        image.texture.size.width = (image.texture.data->ratio.width * image.size.width) + image.texture.offset.x;
+        image.texture.size.height = (image.texture.data->ratio.height * image.size.height) + image.texture.offset.y;
     }
     
     void Draw()
     {
         // Set image geometry
         image.vertex1.geometry = vec3(0.0f, 0.0f, 0.0f);
-        image.vertex2.geometry = vec3(image.texture.data->contentSize.width, 0.0f, 0.0f);
-        image.vertex3.geometry = vec3(0.0f, image.texture.data->contentSize.height, 0.0f);
-        image.vertex4.geometry = vec3(image.texture.data->contentSize.width, image.texture.data->contentSize.height, 0.0f);
+        image.vertex2.geometry = vec3(image.size.width, 0.0f, 0.0f);
+        image.vertex3.geometry = vec3(0.0f, image.size.height, 0.0f);
+        image.vertex4.geometry = vec3(image.size.width, image.size.height, 0.0f);
         
         // Set image colors
         image.vertex1.color = Color4fWhite;
@@ -69,22 +93,45 @@ public:
         image.vertex4.color = Color4fWhite;
         
         // Set texture coordinates
-        image.vertex1.texture.x = 0.0f;
-        image.vertex1.texture.y = 0.0f;
+        image.vertex1.texture.x = image.texture.offset.x;
+        image.vertex1.texture.y = image.texture.offset.y;
         
-        image.vertex2.texture.x = image.texture.data->maxS;
-        image.vertex2.texture.y = 0.0f;
+        image.vertex2.texture.x = image.texture.size.width;
+        image.vertex2.texture.y = image.texture.offset.y;
         
-        image.vertex3.texture.x = 0.0f;
-        image.vertex3.texture.y = image.texture.data->maxT;
+        image.vertex3.texture.x = image.texture.offset.x;
+        image.vertex3.texture.y = image.texture.size.height;
         
-        image.vertex4.texture.x = image.texture.data->maxS;
-        image.vertex4.texture.y = image.texture.data->maxT;
+        image.vertex4.texture.x = image.texture.size.width;
+        image.vertex4.texture.y = image.texture.size.height;
         
         mat4 translate = glm::translate(glm::mat4(), this->m_gameObject->position);
-        mat4 rotate = glm::rotate(glm::mat4(), this->m_gameObject->rotation.x, vec3(1.0f, 0.0f, 0.0f)) *
+
+        mat4 translateFromCenter = glm::mat4();
+        mat4 translateToCenter = glm::mat4();
+        
+        
+        if (this->m_gameObject->centered)
+        {
+            vec3 center = vec3(((image.size.width * this->m_gameObject->scale.x) / 2.0f),
+                               ((image.size.height * this->m_gameObject->scale.y) / 2.0f),
+                                0.0f);
+            
+            translateToCenter = glm::translate(glm::mat4(), center);
+            
+            vec3 back = vec3(-((image.size.width * this->m_gameObject->scale.x) / 2.0f),
+                             -((image.size.height * this->m_gameObject->scale.y) / 2.0f),
+                               0.0f);
+            
+            translateFromCenter = glm::translate(glm::mat4(), back);
+        }
+        
+        mat4 rotate = translateToCenter *
+                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.x, vec3(1.0f, 0.0f, 0.0f)) *
                       glm::rotate(glm::mat4(), this->m_gameObject->rotation.y, vec3(0.0f, 1.0f, 0.0f)) *
-                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.z, vec3(0.0f, 0.0f, 1.0f));
+                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.z, vec3(0.0f, 0.0f, 1.0f)) *
+                      translateFromCenter;
+        
         mat4 scale = glm::scale(mat4(), this->m_gameObject->scale);
         
         mat4 transform = translate * rotate * scale;

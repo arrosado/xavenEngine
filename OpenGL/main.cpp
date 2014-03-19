@@ -33,8 +33,10 @@
 
 IGameObject * player;
 
-GLfloat rotation = 0.0f;
+GLfloat angle = 0.0f;
 GLfloat zoom = 0.0f;
+vec2 cameraPosition = vec2(0.0f, 0.0f);
+vec3 cameraRotation = vec3(0.0f, 0.0f, 0.0f);
 
 /* Function Prototypes */
 void HandleResize(int w, int h);
@@ -56,14 +58,31 @@ void Draw(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
     // Do Rendering here! [Start]
+    
+    Console::Instance()->Write("Camera position x:%f y:%f", cameraPosition.x, cameraPosition.y);
+	Console::Instance()->Write("Camera rotation on a:%f on %s", angle, cameraRotation.x == 1.0f ? "x" :
+                               (cameraRotation.y == 1.0f ? "y" :
+                                (cameraRotation.z == 1.0f ? "z" : "none")));
+	Console::Instance()->Write("Camera zoom on Z: %f", zoom);
+    Console::Instance()->Write("Player position x:%f y:%f z:%f", player->position.x, player->position.y, player->position.z);
+    Console::Instance()->Write("Player rotation x:%f y:%f z:%f", player->rotation.x, player->rotation.y, player->rotation.z);
+    Console::Instance()->Write("Player is %s", player->centered ? "Centered" : "Not Centered");
+    Console::Instance()->Write("Player scale w:%f h:%f d:%f", player->scale.x, player->scale.y, player->scale.z);
+    
 
 #ifdef CAMERA_TYPE_3D
     glEnable(GL_DEPTH_TEST);
-	glRotatef(rotation, 1.0f, 1.0f, 0.0f);
-    glTranslatef(0.0f, 0.0f, zoom);
+    if (cameraRotation.x || cameraRotation.y || cameraRotation.z)
+        glRotatef(angle, cameraRotation.x, cameraRotation.y, cameraRotation.z);
+    glTranslatef(cameraPosition.x, cameraPosition.y, zoom);
+    angle =
+    cameraPosition.x =
+    cameraPosition.y =
+    zoom = 0.0f;
 #else
-    glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+    glRotatef(angle, 0.0f, 0.0f, 1.0f);
     glScalef(1.0f + (zoom/2.0f), 1.0f + (zoom/2.0f), 1.0f + (zoom/2.0f));
+    glTranslatef(cameraPosition.x, cameraPosition.y, 0.0f);
 #endif
 
 	Grid *grid = new Grid(10, 10, 1, Color4fMake(0.0f, 0.0f, 0.0f, 255.0f));
@@ -77,9 +96,6 @@ void Draw(void)
     
     player->Draw();
     
-	Console::Instance()->Write("Rotation on X: %f", rotation);
-	Console::Instance()->Write("Zoom on Z: %f", zoom);
-    Console::Instance()->Write("Player is at x:%f y:%f z:%f", player->position.x, player->position.y, player->position.z);
 	Console::Instance()->Draw();
 
 #ifdef CAMERA_TYPE_3D
@@ -95,53 +111,84 @@ void Draw(void)
 void DoStuff() {
     InputManager *i = InputManager::Instance();
     
-    
     bool movePlayer = i->GetKeyState('m') && i->GetKeyState('p');
     bool rotatePlayer = i->GetKeyState('r') && i->GetKeyState('p');
     bool scalePlayer = i->GetKeyState('s') && i->GetKeyState('p');
     
+    char up = 'e';
+    char down = 'g';
+    char left = 'd';
+    char right = 'f';
+    
+    float speed = 2.0f;
+    
     if (movePlayer)
     {
-        player->position.x += i->GetKeyState('d') ? 1.0f : (i->GetKeyState('e') ? -1.0f : 0.0f);
-        player->position.y += i->GetKeyState('f') ? 1.0f : (i->GetKeyState('g') ? -1.0f : 0.0f);
+        player->position.x += i->GetKeyState(right) ? speed : (i->GetKeyState(left) ? -speed : 0.0f);
+        player->position.y += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
+        return;
     }
     
     if (rotatePlayer)
     {
-        player->rotation.z += i->GetKeyState('d') ? 1.0f : (i->GetKeyState('e') ? -1.0f : 0.0f);
-        player->rotation.y += i->GetKeyState('f') ? 1.0f : (i->GetKeyState('g') ? -1.0f : 0.0f);
+        player->rotation.z += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
+        player->rotation.y += i->GetKeyState(left) ? speed : (i->GetKeyState(right) ? -speed : 0.0f);
+        if (i->GetKeyState('c'))
+            player->centered = !player->centered;
+        return;
     }
     
     if (scalePlayer)
     {
-        player->scale.x += i->GetKeyState('d') ? 0.1f : (i->GetKeyState('e') ? -0.1f : 0.0f);
-        player->scale.y += i->GetKeyState('f') ? 0.1f : (i->GetKeyState('g') ? -0.1f : 0.0f);
+        player->scale.x += i->GetKeyState(right) ? speed : (i->GetKeyState(left) ? -speed : 0.0f);
+        player->scale.y += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
+        return;
     }
     
     bool rotateCamera = i->GetKeyState('r') && i->GetKeyState('c');
+    bool moveCamera = i->GetKeyState('m') && i->GetKeyState('c');
+    bool zoomCamera = i->GetKeyState('z') && i->GetKeyState('c');
     
     if (rotateCamera)
     {
-        bool clockwise = i->GetKeyState('d');
+        angle += i->GetKeyState(up) || i->GetKeyState(left) ? speed : (i->GetKeyState(down) || i->GetKeyState(right) ? -speed : 0.0f);
         
-        rotation = rotation + ((clockwise) ? -0.1f : 0.1f);
+        
+#define ON 1.0f
+#define OFF 0.0f
+        
+        cameraRotation.x = i->GetKeyState(up) || i->GetKeyState(down) ? ON : OFF;
+        cameraRotation.y = i->GetKeyState(left) || i->GetKeyState(right) ? ON : OFF;
+        cameraRotation.z = i->GetKeyState('z') ? ON : OFF;
+        
+#undef ON
+#undef OFF
+        
+        return;
     }
     
-    bool zooming = i->GetKeyState('z') && i->GetKeyState('c');
+    if (moveCamera)
+    {
+        cameraPosition.x += i->GetKeyState(left) ? speed : (i->GetKeyState(right) ? -speed : 0.0f);
+        cameraPosition.y += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
+        return;
+    }
     
-    if (zooming)
+    
+    if (zoomCamera)
     {
         bool in = i->GetKeyState('i');
         bool out = i->GetKeyState('o');
         
         if (in)
         {
-            zoom++;
+            zoom += speed;
         }
         else if (out)
         {
-            zoom--;
+            zoom -= speed;
         }
+        return;
     }
     
     bool reset = i->GetKeyState('x');
@@ -149,8 +196,11 @@ void DoStuff() {
     if (reset)
     {
         glLoadIdentity();
-        rotation =
+        angle =
+        cameraPosition.x =
+        cameraPosition.y =
         zoom = 0.0f;
+        return;
     }
 }
 
@@ -207,7 +257,7 @@ void HandleResize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 #ifdef CAMERA_TYPE_3D
-    glTranslatef(0.0f, 0.0f, -20.0f);
+    glTranslatef(0.0f, 0.0f, -250.0f);
 #else
 	glScalef(20.0f, 20.0f, 20.0f);
     glTranslatef(0.0f, 0.0f, -1.0f);
@@ -255,6 +305,7 @@ void initGame(int w, int h)
     player = new GameObject();
     
     IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png");
+    //IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png", Rect2DfMake(170.0f * 2.0f, 170.0f * 3.0f, 170.0f, 170.0f));
     
     player->AddComponent(sprite);
 }

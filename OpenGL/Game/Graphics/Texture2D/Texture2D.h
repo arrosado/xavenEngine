@@ -26,7 +26,7 @@ public:
 	GLuint	height;
 	GLfloat maxS;
 	GLfloat maxT;
-	Size2Df	textureRatio;
+	Size2Df	ratio;
 	Texture2DPixelFormat pixelFormat;
 	
 public:

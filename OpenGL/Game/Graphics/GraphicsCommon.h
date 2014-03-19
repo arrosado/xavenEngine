@@ -77,9 +77,16 @@ typedef struct {
 } Size3Df;
 
 typedef struct {
+    vec2 origin;
+    Size2Df size;
+} Rect2Df;
+
+typedef struct {
 	Texture2D* data;
 	GLuint retainCount;
 	std::string name;
+    vec2 offset;
+    Size2Df size;
 } Texture;
 
 typedef std::vector<Texture> TextureCollection;
@@ -96,6 +103,7 @@ typedef struct {
 	Vertex vertex3;
 	Vertex vertex4;
     Texture texture;
+    Size2Df size;
 } Image;
 
 static const Size2Df Size2DfZero = {1.0f, 1.0f};
@@ -104,7 +112,9 @@ static inline Size2Df Size2DfMake(GLfloat w, GLfloat h) { Size2Df s = { w, h }; 
 
 static const Size3Df Size3DfZero = {0.0f, 0.0f, 0.0f};
 
-static inline Size3Df Size3DfMake(GLfloat w, GLfloat h, GLfloat d) { Size3Df s = {w, h, d}; return s; } 
+static inline Size3Df Size3DfMake(GLfloat w, GLfloat h, GLfloat d) { Size3Df s = {w, h, d}; return s; }
+
+static inline Rect2Df Rect2DfMake(GLfloat x, GLfloat y, GLfloat w, GLfloat h) { Rect2Df r = { vec2(x, y), Size2DfMake(w, h) }; return r; }
 
 static const Color4f Color4fZero = {1.0f, 1.0f, 1.0f, 1.0f};
 

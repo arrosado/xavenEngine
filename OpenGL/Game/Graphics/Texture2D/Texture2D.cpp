@@ -172,7 +172,7 @@ Texture2D::Texture2D(std::string imageName, GLenum filter) {
 		this->maxT = 0;
 		this->name = 0;
 		this->pixelFormat = kTexture2DPixelFormat_Automatic;
-		this->textureRatio = Size2DfMake(0.0f, 0.0f);
+		this->ratio = Size2DfMake(0.0f, 0.0f);
 		
 		return;
 	}
@@ -202,8 +202,8 @@ Texture2D::Texture2D(std::string imageName, GLenum filter) {
 	this->pixelFormat = pixelFormat;
 	this->maxS = this->contentSize.width / (float)imageWidth;
 	this->maxT = this->contentSize.height / (float)imageHeight;
-	this->textureRatio.width = 1.0f / (float)imageWidth;
-	this->textureRatio.height = 1.0f / (float)imageHeight;
+	this->ratio.width = 1.0f / (float)imageWidth;
+	this->ratio.height = 1.0f / (float)imageHeight;
 
 	free(imageData);
 }
