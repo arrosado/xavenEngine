@@ -128,18 +128,18 @@ float Elastic::EaseIn(float t, float b, float c, float d, float a, float p) {
 		p = d * 0.3;
 	
 	float s;
-	if (!a || a < fabs(c))
+	if (!a || a < std::fabs(c))
 	{
 		a = c;
 		s = p / 4;
 	}
 	else
 	{
-		s = p / (2 * 3.14159) * asin(c / a);
+		s = p / (2 * 3.14159) * std::asin(c / a);
 	}
 	
-	return -(a * pow(2, 10 * (t -= 1)) *
-			 sin((t * d - s) * (2 * 3.14159) / p)) + b;
+	return -(a * std::pow(2, 10 * (t -= 1)) *
+		std::sin((t * d - s) * (2 * 3.14159) / p)) + b;
 }
 float Elastic::EaseOut(float t, float b, float c, float d, float a, float p) {
 	if (t == 0)
@@ -152,18 +152,18 @@ float Elastic::EaseOut(float t, float b, float c, float d, float a, float p) {
 		p = d * 0.3;
 	
 	float s;
-	if (!a || a < fabs(c))
+	if (!a || a < std::fabs(c))
 	{
 		a = c;
 		s = p / 4;
 	}
 	else
 	{
-		s = p / (2 * 3.14159) * asin(c / a);
+		s = p / (2 * 3.14159) * std::asin(c / a);
 	}
 	
-	return a * pow(2, -10 * t) *
-	sin((t * d - s) * (2 * 3.14159) / p) + c + b;
+	return a * std::pow(2, -10 * t) *
+		std::sin((t * d - s) * (2 * 3.14159) / p) + c + b;
 }
 float Elastic::EaseInOut(float t, float b, float c, float d, float a, float p) {
 	if (t == 0)
@@ -176,24 +176,24 @@ float Elastic::EaseInOut(float t, float b, float c, float d, float a, float p) {
 		p = d * (0.3 * 1.5);
 	
 	float s;
-	if (!a || a < fabs(c))
+	if (!a || a < std::fabs(c))
 	{
 		a = c;
 		s = p / 4;
 	}
 	else
 	{
-		s = p / (2 * 3.14159) * asin(c / a);
+		s = p / (2 * 3.14159) * std::asin(c / a);
 	}
 	
 	if (t < 1)
 	{
-		return -0.5 * (a * pow(2, 10 * (t -= 1)) *
-					   sin((t * d - s) * (2 * 3.14159) /p)) + b;
+		return -0.5 * (a * std::pow(2, 10 * (t -= 1)) *
+			std::sin((t * d - s) * (2 * 3.14159) / p)) + b;
 	}
 	
-	return a * pow(2, -10 * (t -= 1)) *
-	sin((t * d - s) * (2 * 3.14159) / p ) * 0.5 + c + b;
+	return a * std::pow(2, -10 * (t -= 1)) *
+		std::sin((t * d - s) * (2 * 3.14159) / p) * 0.5 + c + b;
 }
 
 
@@ -319,13 +319,13 @@ float Sinusoidal::EaseNone(float t, float b, float c, float d) {
 	return c * t / d + b;
 }
 float Sinusoidal::EaseIn(float t, float b, float c, float d) {
-	return -c * cos(t/d * (3.14159/2)) + c + b;
+	return -c * std::cos(t / d * (3.14159 / 2)) + c + b;
 }
 float Sinusoidal::EaseOut(float t, float b, float c, float d) {
-	return c * sin(t/d * (3.14159/2)) + b;
+	return c * std::sin(t / d * (3.14159 / 2)) + b;
 }
 float Sinusoidal::EaseInOut(float t, float b, float c, float d) {
-	return -c/2 * (cos(3.14159*t/d) - 1) + b;
+	return -c / 2 * (std::cos(3.14159*t / d) - 1) + b;
 }
 
 
@@ -333,16 +333,16 @@ float Exponential::EaseNone(float t, float b, float c, float d) {
 	return c * t / d + b;
 }
 float Exponential::EaseIn(float t, float b, float c, float d) { 
-	return c * pow(2.0f, 10 * (t/d - 1)) + b; 
+	return c * std::pow(2.0f, 10 * (t / d - 1)) + b;
 }
 float Exponential::EaseOut(float t, float b, float c, float d) { 
-	return c * ( -pow(2, -10 * t/d ) + 1) + b; 
+	return c * (-std::pow(2, -10 * t / d) + 1) + b;
 }
 float Exponential::EaseInOut(float t, float b, float c, float d) { 
 	t /= d/2; 
-	if (t < 1) return c/2 * pow(2, 10 * (t -1 ) ) + b; 
+	if (t < 1) return c / 2 * std::pow(2, 10 * (t - 1)) + b;
 	t--; 
-	return c/2 * (-pow(2, -10 * t) + 2 ) + b; 
+	return c / 2 * (-std::pow(2, -10 * t) + 2) + b;
 }
 
 
@@ -351,17 +351,17 @@ float Circular::EaseNone(float t, float b, float c, float d) {
 }
 float Circular::EaseIn(float t, float b, float c, float d) { 
 	t /= d; 
-	return -c * (sqrt(1 - t*t) - 1) + b; 
+	return -c * (std::sqrt(1 - t*t) - 1) + b; 
 }
 float Circular::EaseOut(float t, float b, float c, float d) { 
 	t /= d; 
 	t--; 
-	return c * sqrt(1 - t*t) + b; 
+	return c * std::sqrt(1 - t*t) + b;
 }
 float Circular::EaseInOut(float t, float b, float c, float d) { 
 	t /= d/2; 
-	if (t < 1) return -c/2 * (sqrt(1 - t*t) - 1) + b; 
+	if (t < 1) return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
 	t -= 2; 
-	return c/2 * (sqrt(1 - t*t) + 1) + b; 
+	return c / 2 * (std::sqrt(1 - t*t) + 1) + b;
 }
 

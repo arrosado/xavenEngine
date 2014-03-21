@@ -9,5 +9,5 @@
 #include <windows.h>
 #include <tchar.h>
 
-#define _CRT_SECURE_NO_WARNINGS 1
+#pragma warning(disable : 4996)
 

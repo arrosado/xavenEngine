@@ -25,7 +25,7 @@ protected:
 public:
     vec3 position;
     vec3 rotation;
-    vec3 scale = vec3(1.0f, 1.0f, 1.0f);
+    vec3 scale;
     bool centered;
     
     virtual void AddComponent(IGameObjectComponent * component) = 0;
@@ -175,6 +175,7 @@ public:
     
     GameObject()
     {
+		this->scale = vec3(1.0f, 1.0f, 1.0f);
     }
     
     ~GameObject()
