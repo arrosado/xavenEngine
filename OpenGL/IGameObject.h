@@ -180,7 +180,6 @@ public:
     {
         std::vector<IGameObjectComponent *>::iterator it;
         for(it = components.begin(); it != components.end(); ++it) {
-            /* std::cout << *it; ... */
             (*it)->Draw();
         }
     }
