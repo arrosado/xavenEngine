@@ -114,11 +114,14 @@ void DoStuff() {
     bool movePlayer = i->GetKeyState('m') && i->GetKeyState('p');
     bool rotatePlayer = i->GetKeyState('r') && i->GetKeyState('p');
     bool scalePlayer = i->GetKeyState('s') && i->GetKeyState('p');
+    bool centerPlayer = i->GetKeyState('c') && i->GetKeyState('p');
     
     char up = 'e';
     char down = 'g';
     char left = 'd';
     char right = 'f';
+    char in = 'i';
+    char out = 'o';
     
     float speed = 2.0f;
     
@@ -126,6 +129,7 @@ void DoStuff() {
     {
         player->position.x += i->GetKeyState(right) ? speed : (i->GetKeyState(left) ? -speed : 0.0f);
         player->position.y += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
+        player->position.z += i->GetKeyState(in) ? speed : (i->GetKeyState(out) ? -speed : 0.0f);
         return;
     }
     
@@ -133,8 +137,6 @@ void DoStuff() {
     {
         player->rotation.z += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
         player->rotation.y += i->GetKeyState(left) ? speed : (i->GetKeyState(right) ? -speed : 0.0f);
-        if (i->GetKeyState('c'))
-            player->centered = !player->centered;
         return;
     }
     
@@ -144,6 +146,8 @@ void DoStuff() {
         player->scale.y += i->GetKeyState(up) ? speed : (i->GetKeyState(down) ? -speed : 0.0f);
         return;
     }
+    
+    player->centered = centerPlayer;
     
     bool rotateCamera = i->GetKeyState('r') && i->GetKeyState('c');
     bool moveCamera = i->GetKeyState('m') && i->GetKeyState('c');
@@ -177,14 +181,11 @@ void DoStuff() {
     
     if (zoomCamera)
     {
-        bool in = i->GetKeyState('i');
-        bool out = i->GetKeyState('o');
-        
-        if (in)
+        if (i->GetKeyState(in))
         {
             zoom += speed;
         }
-        else if (out)
+        else if (i->GetKeyState(out))
         {
             zoom -= speed;
         }
@@ -199,6 +200,12 @@ void DoStuff() {
         angle =
         cameraPosition.x =
         cameraPosition.y =
+        player->position.x =
+        player->position.y =
+        player->position.z =
+        player->rotation.x =
+        player->rotation.y =
+        player->rotation.z =
         zoom = 0.0f;
         return;
     }
@@ -304,8 +311,8 @@ void initGame(int w, int h)
     
     player = new GameObject();
     
-    IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png");
-    //IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png", Rect2DfMake(170.0f * 2.0f, 170.0f * 3.0f, 170.0f, 170.0f));
+    //IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png");
+    IGameObjectComponent * sprite = new SpriteRendererComponent(player, "run.png", Rect2DfMake(170.0f * 2.0f, 170.0f * 3.0f, 170.0f, 170.0f));
     
     player->AddComponent(sprite);
 }

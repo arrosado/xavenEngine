@@ -106,35 +106,24 @@ public:
         image.vertex4.texture.y = image.texture.size.height;
         
         mat4 translate = glm::translate(glm::mat4(), this->m_gameObject->position);
-
-        mat4 translateFromCenter = glm::mat4();
         mat4 translateToCenter = glm::mat4();
-        
-        
+
         if (this->m_gameObject->centered)
         {
-            vec3 center = vec3(((image.size.width * this->m_gameObject->scale.x) / 2.0f),
-                               ((image.size.height * this->m_gameObject->scale.y) / 2.0f),
-                                0.0f);
-            
-            translateToCenter = glm::translate(glm::mat4(), center);
-            
-            vec3 back = vec3(-((image.size.width * this->m_gameObject->scale.x) / 2.0f),
-                             -((image.size.height * this->m_gameObject->scale.y) / 2.0f),
+            vec3 center = vec3(-((image.size.width * this->m_gameObject->scale.x) / 2.0f),
+                               -((image.size.height * this->m_gameObject->scale.y) / 2.0f),
                                0.0f);
             
-            translateFromCenter = glm::translate(glm::mat4(), back);
+            translateToCenter = glm::translate(glm::mat4(), center);
         }
         
-        mat4 rotate = translateToCenter *
-                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.x, vec3(1.0f, 0.0f, 0.0f)) *
+        mat4 rotate = glm::rotate(glm::mat4(), this->m_gameObject->rotation.x, vec3(1.0f, 0.0f, 0.0f)) *
                       glm::rotate(glm::mat4(), this->m_gameObject->rotation.y, vec3(0.0f, 1.0f, 0.0f)) *
-                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.z, vec3(0.0f, 0.0f, 1.0f)) *
-                      translateFromCenter;
+                      glm::rotate(glm::mat4(), this->m_gameObject->rotation.z, vec3(0.0f, 0.0f, 1.0f));
         
         mat4 scale = glm::scale(mat4(), this->m_gameObject->scale);
         
-        mat4 transform = translate * rotate * scale;
+        mat4 transform = translate * rotate * scale * translateToCenter;
         
         image.vertex1.geometry = (transform * glm::vec4(image.vertex1.geometry, 1.0f)).xyz();
         image.vertex2.geometry = (transform * glm::vec4(image.vertex2.geometry, 1.0f)).xyz();
