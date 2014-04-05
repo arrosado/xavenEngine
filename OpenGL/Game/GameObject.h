@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Ariel Rosado. All rights reserved.
 //
 
-#ifndef OpenGL_GameObject_h
-#define OpenGL_GameObject_h
+#ifndef GameObject_H
+#define GameObject_H
 
 #include <vector>
 #include <glm.hpp>
-#include <IGameObject.h>
+#include <Game/IGameObject.h>
 
 class GameObject: public IGameObject
 {
@@ -39,8 +39,5 @@ public:
         }
     }
 };
-
-
-
 
 #endif

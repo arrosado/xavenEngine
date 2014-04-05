@@ -9,10 +9,11 @@
 #ifndef OpenGL_SpriteRendererComponent_h
 #define OpenGL_SpriteRendererComponent_h
 
-#include <IGameObject.h>
-#include <IGameObjectComponent.h>
+#include <Game/IGameObject.h>
+#include <Game/IGameObjectComponent.h>
 #include <Game/Graphics/GraphicsCommon.h>
 #include <Game/Graphics/Texture2D/Texture2D.h>
+#include <glm/gtc/matrix_transform.inl>
 
 class SpriteRendererComponent: public IGameObjectComponent {
 public:

@@ -6,16 +6,12 @@
 //  Copyright (c) 2014 Ariel Rosado. All rights reserved.
 //
 
-#ifndef OpenGL_IGameObject_h
-#define OpenGL_IGameObject_h
+#ifndef IGameObject_H
+#define IGameObject_H
 
-#include <string>
 #include <vector>
-#include <glm.hpp>
-#include <IGameObjectComponent.h>
-#include <glm/gtc/matrix_transform.inl>
-
-//struct IGameObjectComponent;
+#include <Game/Graphics/GraphicsCommon.h>
+#include <Game/IGameObjectComponent.h>
 
 struct IGameObject {
 protected:
