@@ -134,6 +134,7 @@ void DoStuff() {
     player->centered = centerPlayer;
     
     bool rotateCamera = i->GetKeyState('r') && i->GetKeyState('c');
+    bool rotateWorld = i->GetKeyState('r') && i->GetKeyState('w');
     bool moveCamera = i->GetKeyState('m') && i->GetKeyState('c');
     bool zoomCamera = i->GetKeyState('z') && i->GetKeyState('c');
     
@@ -157,6 +158,32 @@ void DoStuff() {
             camera->Rotate(0.0f,
                            0.0f,
                            i->GetKeyState(up) || i->GetKeyState(left) ? speed : (i->GetKeyState(down) || i->GetKeyState(right) ? -speed : 0.0f));
+        
+#undef ON
+#undef OFF
+        
+        return;
+    }
+    
+    if (rotateWorld)
+    {
+#define ON 1.0f
+#define OFF 0.0f
+        
+        if (i->GetKeyState(up) || i->GetKeyState(down) ? ON : OFF)
+            camera->RotateWorld(i->GetKeyState(up) || i->GetKeyState(left) ? -speed : (i->GetKeyState(down) || i->GetKeyState(right) ? speed : 0.0f),
+                                0.0f,
+                                0.0f);
+        
+        if (i->GetKeyState(left) || i->GetKeyState(right) ? ON : OFF)
+            camera->RotateWorld(0.0f,
+                                i->GetKeyState(up) || i->GetKeyState(left) ? -speed : (i->GetKeyState(down) || i->GetKeyState(right) ? speed : 0.0f),
+                                0.0f);
+        
+        if (i->GetKeyState('z') ? ON : OFF)
+            camera->RotateWorld(0.0f,
+                                0.0f,
+                                i->GetKeyState(up) || i->GetKeyState(left) ? speed : (i->GetKeyState(down) || i->GetKeyState(right) ? -speed : 0.0f));
         
 #undef ON
 #undef OFF
@@ -192,12 +219,7 @@ void DoStuff() {
     if (reset)
     {
         glLoadIdentity();
-        camera->position.x =
-        camera->position.y =
-        camera->position.z =
-        camera->rotation.x =
-        camera->rotation.y =
-        camera->rotation.z =
+        camera->Reset();
         player->position.x =
         player->position.y =
         player->position.z =

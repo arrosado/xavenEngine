@@ -25,6 +25,9 @@ GameCamera::GameCamera(CameraType cameraType) {
 	this->animations[DXAnimation] = new MotionAnimation(new Exponential(), EaseOut, &this->position.x, this->m_direction.x, DEFAULT_MOTION_ANIMATION_DURATION);
 	this->animations[DYAnimation] = new MotionAnimation(new Exponential(), EaseOut, &this->position.y, this->m_direction.y, DEFAULT_MOTION_ANIMATION_DURATION);
 	this->animations[DZAnimation] = new MotionAnimation(new Exponential(), EaseOut, &this->position.z, this->m_direction.z, DEFAULT_MOTION_ANIMATION_DURATION);
+    this->animations[WRXAnimation] = new MotionAnimation(new Linear(), EaseNone, &this->m_worldRotation.x, this->m_worldRotation.x, DEFAULT_MOTION_ANIMATION_DURATION);
+    this->animations[WRYAnimation] = new MotionAnimation(new Linear(), EaseNone, &this->m_worldRotation.y, this->m_worldRotation.y, DEFAULT_MOTION_ANIMATION_DURATION);
+    this->animations[WRZAnimation] = new MotionAnimation(new Linear(), EaseNone, &this->m_worldRotation.z, this->m_worldRotation.z, DEFAULT_MOTION_ANIMATION_DURATION);
     
 	this->Reset();
 }
@@ -34,6 +37,7 @@ GameCamera::~GameCamera() {
 	this->rotation = vec3(0.0f, 0.0f, 0.0f);
     this->scale = vec3(1.0f, 1.0f, 1.0f);
     this->m_direction = vec3(0.0f, 0.0f, 0.0f);
+    this->m_worldRotation = vec3(0.0f, 0.0f, 0.0f);
 	this->m_clearColor = Color4fZero;
     
 	for(int i = 0; i < AnimationCount; i++)
@@ -99,42 +103,34 @@ void GameCamera::Update(float delta) {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         
-        /* Camera local coordinate system translation.
-         * If moving the camera in its local coordinate system is desired,
-         * then the translation has to be done before any rotation. If
-         * translation is done after rotating, then the translation will
-         * be executed on world coordinates.
-         */
-        //glTranslatef(this->position.x, this->position.y, this->position.z);
-        
-        /*
-         * Rotate the projection matrix on the cameras
-         * local coordinate system.
-         */
-        //glRotatef(this->rotation.x, 1.0f, 0.0f, 0.0f);
-        //glRotatef(this->rotation.y, 0.0f, 1.0f, 0.0f);
-        //glRotatef(this->rotation.z, 0.0f, 0.0f, 1.0f);
-        
         switch (m_cameraType) {
             case Camera3D:
                 
                 if (rotation.x || rotation.y || rotation.z) {
+                    /*
+                     * Rotate the projection matrix on the cameras
+                     * local coordinate system.
+                     */
                     glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
                     glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
                     glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
                 }
                 
+                /* Camera local coordinate system translation.
+                 * If moving the camera in its local coordinate system is desired,
+                 * then the translation has to be done before any rotation. If
+                 * translation is done after rotating, then the translation will
+                 * be executed on world coordinates.
+                 */
                 glTranslatef(position.x, position.y, position.z);
                 
-                /*
-                rotation.x =
-                rotation.y =
-                rotation.z =
-                position.x =
-                position.y =
-                position.z = 0.0f;
-                */
-                 
+                if (m_worldRotation.x || m_worldRotation.y || m_worldRotation.z)
+                {
+                    glRotatef(m_worldRotation.x, 1.0f, 0.0f, 0.0f);
+                    glRotatef(m_worldRotation.y, 0.0f, 1.0f, 0.0f);
+                    glRotatef(m_worldRotation.z, 0.0f, 0.0f, 1.0f);
+                }
+                
                 break;
                 
             case Camera2D:
@@ -189,25 +185,41 @@ void GameCamera::Rotate(float x, float y, float z) {
 }
 
 void GameCamera::Rotate(float x, float y, float z, float duration) {
-	float newX, newY, newZ;
-	newX = x+this->rotation.x;//std::fmod(x+this->rotation.x, 360.0f);
-	newY = y+this->rotation.y;//std::fmod(y+this->rotation.y, 360.0f);
-	newZ = z+this->rotation.z;//std::fmod(z+this->rotation.z, 360.0f);
-    
 	this->animations[RXAnimation]->Reset();
 	this->animations[RXAnimation]->SetDuration(duration);
-	this->animations[RXAnimation]->SetDesired(newX);
+	this->animations[RXAnimation]->SetDesired(x + this->rotation.x);
 	this->animations[RXAnimation]->Activate();
 	
 	this->animations[RYAnimation]->Reset();
 	this->animations[RYAnimation]->SetDuration(duration);
-	this->animations[RYAnimation]->SetDesired(newY);
+	this->animations[RYAnimation]->SetDesired(y + this->rotation.y);
 	this->animations[RYAnimation]->Activate();
 	
 	this->animations[RZAnimation]->Reset();
 	this->animations[RZAnimation]->SetDuration(duration);
-	this->animations[RZAnimation]->SetDesired(newZ);
+	this->animations[RZAnimation]->SetDesired(z + this->rotation.z);
 	this->animations[RZAnimation]->Activate();
+}
+
+void GameCamera::RotateWorld(float x, float y, float z) {
+    this->RotateWorld(x, y, z, DEFAULT_MOTION_ANIMATION_DURATION);
+}
+
+void GameCamera::RotateWorld(float x, float y, float z, float duration) {
+    this->animations[WRXAnimation]->Reset();
+    this->animations[WRXAnimation]->SetDuration(duration);
+    this->animations[WRXAnimation]->SetDesired(x + this->m_worldRotation.x);
+    this->animations[WRXAnimation]->Activate();
+    
+    this->animations[WRYAnimation]->Reset();
+    this->animations[WRYAnimation]->SetDuration(duration);
+    this->animations[WRYAnimation]->SetDesired(y + this->m_worldRotation.y);
+    this->animations[WRYAnimation]->Activate();
+    
+    this->animations[WRZAnimation]->Reset();
+    this->animations[WRZAnimation]->SetDuration(duration);
+    this->animations[WRZAnimation]->SetDesired(z + this->m_worldRotation.z);
+    this->animations[WRZAnimation]->Activate();
 }
 
 void GameCamera::PointAt(float x, float y, float z) {
@@ -235,5 +247,6 @@ void GameCamera::Reset() {
 	this->position = vec3(0.0f, 0.0f, 0.0f);
 	this->rotation = vec3(0.0f, 0.0f, 0.0f);
 	this->m_direction = vec3(0.0f, 0.0f, 0.0f);
+    this->m_worldRotation = vec3(0.0f, 0.0f, 0.0f);
 	this->Zoom(INITIAL_Z_POSITION);
 }

@@ -34,6 +34,8 @@ public:
 	void Zoom(float zoom, float duration);
 	void Rotate(float x, float y, float z);
 	void Rotate(float x, float y, float z, float duration);
+    void RotateWorld(float x, float y, float z);
+    void RotateWorld(float x, float y, float z, float duration);
 	void PointAt(float x, float y, float z);
 	void PointAt(float x, float y, float z, float duration);
 	void Reset();
@@ -41,6 +43,7 @@ public:
 private:
     CameraType m_cameraType;
     vec3 m_direction;
+    vec3 m_worldRotation;
     Color4f m_clearColor;
     Size2Df m_screenSize;
     
@@ -54,6 +57,9 @@ private:
 		DXAnimation,
 		DYAnimation,
 		DZAnimation,
+        WRXAnimation,
+        WRYAnimation,
+        WRZAnimation,
 		AnimationCount
 	};
 	
