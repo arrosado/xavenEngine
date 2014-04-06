@@ -79,6 +79,7 @@ _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
 *.sass-cache
+xcuserdata/
 
 #Project files
 [Bb]uild/
