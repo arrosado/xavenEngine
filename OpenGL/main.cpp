@@ -289,60 +289,6 @@ void initGame(int w, int h)
     Console::Instance()->Init(0);
     InputManager::Instance()->Init(2, w, h);
 
-    // Load texture [Start]
-    textureLoader = new Texture2D(RESOURCES_FOLDER "run.png", GL_LINEAR);
-    texture.name = RESOURCES_FOLDER "run.png";
-	texture.data = textureLoader;
-	texture.retainCount = 0;
-	texture.retainCount++;
-    texture.offset = vec2(0.0f, 0.0f);
-    // Load texture [End]
-    
-    image.size = texture.data->contentSize;
-    texture.size.width = texture.data->maxS;
-    texture.size.height = texture.data->maxT;
-    
-    
-    Rect2Df subImageRect = Rect2DfMake(170.0f, 0.0f, 170.0f, 170.0f);
-    
-    image.size = subImageRect.size;
-    
-    texture.offset.x = texture.data->ratio.width * subImageRect.origin.x;
-    texture.offset.y = texture.data->ratio.height * subImageRect.origin.y;
-    texture.size.width = (texture.data->ratio.width * image.size.width) + texture.offset.x;
-    texture.size.height = (texture.data->ratio.height * image.size.height) + texture.offset.y;
-    
-    GLfloat z = 10.0f;
-    
-    // Set image geometry
-    image.vertex1.geometry.x = 0.0f;
-    image.vertex1.geometry.y = 0.0f;
-    image.vertex1.geometry.z = z;
-    
-    image.vertex2.geometry.x = image.size.width;
-    image.vertex2.geometry.y = 0.0f;
-    image.vertex2.geometry.z = z;
-    
-    image.vertex3.geometry.x = 0.0f;
-    image.vertex3.geometry.y = image.size.height;
-    image.vertex3.geometry.z = z;
-    
-    image.vertex4.geometry.x = image.size.width;
-    image.vertex4.geometry.y = image.size.height;
-    image.vertex4.geometry.z = z;
-
-    // Set texture coordinates
-    image.vertex1.texture.x = texture.offset.x;
-    image.vertex1.texture.y = texture.offset.y;
-    
-    image.vertex2.texture.x = texture.size.width;
-    image.vertex2.texture.y = texture.offset.y;
-    
-    image.vertex3.texture.x = texture.offset.x;
-    image.vertex3.texture.y = texture.size.height;
-    
-    image.vertex4.texture.x = texture.size.width;
-    image.vertex4.texture.y = texture.size.height;
     
     camera = new GameCamera(Camera3D);
     
